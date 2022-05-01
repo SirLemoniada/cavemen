@@ -1,0 +1,7 @@
+#LINUX / MACOS
+mongoimport --db cavemen --collection tweets \
+          --drop --file PATH_TO_JSON_FILE
+
+#WINDOWS
+mongoimport --db cavemen --collection tweets ^
+          --drop --file PATH_TO_JSON_FILE
