@@ -134,3 +134,4 @@ cave.db
 
 *.json
 query
+node_modules
