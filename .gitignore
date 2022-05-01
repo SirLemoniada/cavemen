@@ -132,6 +132,5 @@ dmypy.json
 cave.db
 \
 
-*.json
-query
-node_modules
+load_data
+data
