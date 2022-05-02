@@ -2,7 +2,7 @@
 ## Loading the data
 1. Make sure MongoDB is running
 2. Create `data` folder and put all JSON files inside
-3. create script and run it depending on your OS
+3. create script based on load_data_example
 
 ### Linux / MacOS:
 Create `load_data` file alongside the `load_data_example`\
