@@ -1,0 +1,52 @@
+use("twitterdata")
+
+// db.testcollection.updateMany({}, { $unset : { id_str : 1} })
+// db.testcollection.updateMany({}, { $unset : { in_reply_to_status_id_str : 1} })
+// db.testcollection.updateMany({}, { $unset : { in_reply_to_user_id_str : 1} })
+// db.testcollection.updateMany({}, { $unset : { geo : 1} })
+// db.testcollection.updateMany({}, { $unset : { coordinates : 1} })
+// db.testcollection.updateMany({}, { $unset : { timestamp_ms : 1} })
+// db.testcollection.remove({lang: {$ne : "en"}})
+
+// db.testcollection.updateMany({}, { $unset : {"user.id_str" : { id_str : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.name" : { name : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.url" : { url : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.translator_type" : { translator_type : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.utc_offset" : { utc_offset : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.time_zone" : { time_zone : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.geo_enabled" : { geo_enabled : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.lang" : { lang : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.contributors_enabled" : { contributors_enabled : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.is_translator" : { is_translator : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_background_color" : { profile_background_color : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_background_image_url" : { profile_background_image_url : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_background_image_url_https" : { profile_background_image_url_https : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_background_tile" : { profile_background_tile : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_link_color" : { profile_link_color : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_sidebar_border_color" : { profile_sidebar_border_color : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_sidebar_fill_color" : { profile_sidebar_fill_color : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_text_color" : { profile_text_color : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_use_background_image" : { profile_use_background_image : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_image_url" : { profile_image_url : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_image_url_https" : { profile_image_url_https : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.profile_banner_url" : { profile_banner_url : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.default_profile" : { default_profile : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.default_profile_image" : { default_profile_image : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.following" : { following : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.follow_request_sent" : { follow_request_sent : 1}}})
+// db.testcollection.updateMany({}, { $unset : {"user.notifications" : { notifications : 1}}})
+
+
+
+
+
+// db.testcollection.find({lang : "und"}, {text:1}) 
+// unidentified language only contains hashtags and links - do we need such data?
+
+// db.testcollection.find({lang: {$ne : "en"}}) 
+// db.testcollection.find({lang: "en"}) 
+
+// db.testcollection.find({place: {$ne : null}}) 
+
+// db.testcollection.find({"user.time_zone" : {$ne : null}}) 
+
