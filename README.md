@@ -5,7 +5,7 @@
 3. create script and run it depending on your OS
 
 ### Linux / MacOS:
-Create `load_data` file alongside the `load_data_example`
+Create `load_data` file alongside the `load_data_example`\
 Run from `/cavemen`: 
 ```sh
 chmod +x load_data
@@ -13,7 +13,7 @@ sh ./load_data
 ```
 
 ### Windows
-Create `load_data.bat` file in `data` folder
+Create `load_data.bat` file in `data` folder\
 Run from `\cavemen\data`
 ```sh
 load_data.bat
