@@ -1,5 +1,8 @@
-#Linux / MacOS
+#Linux
 ls -1 data/*.json | while read jsonfile; do mongoimport -d cavemen -c tweets --file $jsonfile --type json; done
+
+#MacOS
+ls *.json | while read jsonfile; do mongoimport -d cavemen -c tweets --file $jsonfile --type json; done
 
 #Windows
 @echo off
