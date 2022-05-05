@@ -9,4 +9,4 @@ for object in truncated: #loop over all the tweets and replace the truncated twe
 truncated_retweets = tweet.find({"retweeted_status": {"$exists": True}}) 
 for object in truncated_retweets:
     if object['retweeted_status']['truncated']:
-        tweet.update_one({"id" : object["id"]}, {"$set" : {"text" : object["retweeted_status"]["extended_tweet"]["full_text"]}})
+        tweet.update_one({"id" : object["id"]}, {"$set" : {"retweeted_status.text" : object["retweeted_status"]["extended_tweet"]["full_text"]}})
