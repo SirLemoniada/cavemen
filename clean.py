@@ -2,9 +2,8 @@ import index #import other file
 tweet = index.tweets #get tweets variable from index.py
 
 outliers = tweet.find({"id": {"$exists" : False}}) # Find all values that do not have an id
-
-for i in outliers: # Iterates through outliers and deletes them
-    tweet.delete_many({"_id" : i["_id"]})
+for error_tweets in outliers: # Iterates through outliers and deletes them
+    tweet.delete_one({"_id" : error_tweets["_id"]})
 
 truncated = tweet.find({"truncated": True}) #find tweets that are truncated
 for object in truncated: #loop over all the tweets and replace the truncated tweet with the full text one
