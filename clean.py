@@ -3,7 +3,7 @@ tweet = index.tweets #get tweets variable from index.py
 
 outliers = tweet.find({"id": {"$exists" : False}}) # Find all values that do not have an id
 
-for i in outliers: # Iterates through all outlier files and deletes them
+for i in outliers: # Iterates through outliers and deletes them
     tweet.delete_many({"_id" : i["_id"]})
 
 truncated = tweet.find({"truncated": True}) #find tweets that are truncated
@@ -14,4 +14,4 @@ for object in truncated: #loop over all the tweets and replace the truncated twe
 truncated_retweets = tweet.find({"retweeted_status": {"$exists": True}}) 
 for object in truncated_retweets:
     if object['retweeted_status']['truncated']:
-        tweet.update_one({"id" : object["id"]}, {"$set" : {"text" : object["retweeted_status"]["extended_tweet"]["full_text"]}})
+        tweet.update_one({"id" : object["id"]}, {"$set" : {"retweeted_status.text" : object["retweeted_status"]["extended_tweet"]["full_text"]}})
