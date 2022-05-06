@@ -1,0 +1,15 @@
+#How to clean data?
+
+Preparation
+
+1) Data Cleaning -> Preparation -> data_preparation.py (Execute Code) Takes around 3 min 50 sec for 400k documents
+
+Cleaning
+
+1) Data Cleaning -> Cleaning -> Run all files once (Order of execution doesn't matter) 20 min 26 sec for 400k documents
+
+563.79 MB Before cleaning compressed
+1.95 GB Before cleaning uncompressed
+
+385.35 MB After cleaning compressed
+933.47 MB After cleaning uncompressed
