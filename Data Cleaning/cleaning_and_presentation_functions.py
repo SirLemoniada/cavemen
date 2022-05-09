@@ -3,8 +3,6 @@ def data_preparation():
     import index #import other file
     tweet = index.tweets #get tweets variable from index.py
 
-    all_tweets = tweet.find({}) # Find all tweets
-
     outliers = tweet.find({"id": {"$exists" : False}}) # Find all values that do not have an id
     for error_tweets in outliers: # Iterates through outliers and deletes them
         tweet.delete_one({"_id" : error_tweets["_id"]})
@@ -183,6 +181,12 @@ def place_object_cleaning():
     for tweet_object in all_tweets: # Deletes all unnecessary information from the place object
         tweet.update_one({"_id" : tweet_object["_id"]}, {"$unset" : {"place.url" : "", "place.bounding_box" : "", "place.attributes" : ""}})
 
-def print_hello():
+def entities_cleaning():
 
-    print("hello")
+    import index #import other file
+    tweet = index.tweets #get tweets variable from index.py
+
+    all_tweets = tweet.find({}) # Find all tweets
+
+    for tweet_object in all_tweets: # Deletes all unnecessary information from the entities
+        tweet.update_one({"_id" : tweet_object["_id"]}, {"$unset" : {"entities.urls" : "", "entities.media" : ""}})
