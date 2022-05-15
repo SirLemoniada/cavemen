@@ -1,3 +1,4 @@
+from turtle import clear
 import cleaning_and_presentation_functions
 
 cleaning_and_presentation_functions.delete_non_english_tweets()
@@ -18,4 +19,3 @@ cleaning_and_presentation_functions.retweeted_status_entities()
 cleaning_and_presentation_functions.quoted_status_entities()
 cleaning_and_presentation_functions.entities_cleaning()
 cleaning_and_presentation_functions.retweeted_status_entities_cleaning()
-

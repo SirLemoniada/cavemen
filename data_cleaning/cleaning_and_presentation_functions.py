@@ -1,5 +1,4 @@
 import index 
-from dateutil import parser
 tweet = index.tweets
 all_tweets = tweet.find({})
 
@@ -7,27 +6,14 @@ def data_preparation():
 
     tweet.delete_many({"id": {"$exists" : False}})
 
-    truncated = tweet.find({"truncated": True})
-    for tweet_object in truncated: 
-        tweet.update_one({"_id" : tweet_object["_id"]}, {"$set" : {"text" : tweet_object["extended_tweet"]["full_text"], 
-        "entities" : tweet_object["extended_tweet"]["entities"]}})
+    tweet.update_many({"truncated": True}, [{"$set" : {"text" : "$extended_tweet.full_text", 
+        "entities" : "$extended_tweet.entities"}}])
 
-    truncated_retweets = tweet.find({"retweeted_status": {"$exists": True}})
-    for tweet_object in truncated_retweets: 
-        if tweet_object['retweeted_status']['truncated']:
-            tweet.update_one({"_id" : tweet_object["_id"]}, {"$set" : {"retweeted_status.text" : tweet_object["retweeted_status"]["extended_tweet"]["full_text"], 
-            "retweeted_status.entities" : tweet_object["retweeted_status"]["extended_tweet"]["entities"]}})
+    tweet.update_many({"retweeted_status": {"$exists": True}}, [{"$set" : {"retweeted_status.text" : "$retweeted_status.extended_tweet.full_text", 
+            "retweeted_status.entities" : "$retweeted_status.extended_tweet.entities"}}])
 
-    truncated_quoted_status = tweet.find({"quoted_status.truncated": True}) 
-    for tweet_object in truncated_quoted_status:
-        tweet.update_one({"_id" : tweet_object["_id"]}, {"$set" : {"quoted_status.text" : tweet_object["quoted_status"]["extended_tweet"]["full_text"]}})
-        
-        if tweet_object['quoted_status']['truncated']:
-            tweet.update_one({"_id" : tweet_object["_id"]}, {"$set" : {"quoted_status.entities" : tweet_object["quoted_status"]["extended_tweet"]["entities"]}})
-
-    for tweet_object in all_tweets:
-        date = parser.parse(tweet_object["created_at"])
-        tweet.update_one({"_id" : tweet_object["_id"]}, {"$set" : {"created_at" : date}})
+    tweet.update_many({"quoted_status.truncated": True}, [{"$set" : {"quoted_status.text" : "$quoted_status.extended_tweet.full_text", 
+        "quoted_status.entities" : "$quoted_status.extended_tweet.entities"}}])
 
 def user_object_cleaning():
 
