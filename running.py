@@ -5,5 +5,4 @@ from grouping import KLM_conversation_start_with_others_function
 #remove_wrong_time()
 #time_to_timestamp()
 #print(KLM_conversation_start_with_others_function())
-from random import sample
-print(sample({-1,0,1},1))
+
