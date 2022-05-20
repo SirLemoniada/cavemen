@@ -21,7 +21,6 @@ screen_names = ["KLM", "AirFrance", "British_Airways", "AmericanAir", "Lufthansa
 
 def remove_wrong_time():
     tweet.delete_many({"created_at": {"$exists": False} })
-    return
 
 
 
@@ -33,7 +32,8 @@ def time_to_timestamp():
             tweet.update_one({"_id" : twt["_id"]},{ "$set": { 'created_at': datetime.datetime.strptime(str(twt["created_at"]), '%a %b %d %X %z %Y') } })
         except:
             pass
-    return
+from random import sample
+print(sample({-1,0,1},1))
 
 
 
