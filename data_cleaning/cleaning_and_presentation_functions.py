@@ -1,9 +1,23 @@
 import index 
+import time
 tweet = index.tweets
+all_tweets = tweet.find({})
+import datetime
 
 def delete_non_english_tweets():
 
     tweet.delete_many({"lang" : {"$ne" : "en"}})
+
+def removing_duplicates():
+
+    duplicates = tweet.aggregate([
+    { "$group": {"_id":{"id":"$id"},"count": {"$sum":1}}},
+    {"$sort": {"count": -1}},
+    {"$match":{"count":{"$gt":1}}}
+    ])
+    for doc in duplicates:
+        for i in range(doc["count"]-1):
+            tweet.delete_one({"id": doc["_id"]["id"]})
 
 def data_preparation():
 
@@ -11,6 +25,10 @@ def data_preparation():
 
     tweet.update_many({"truncated": True}, [{"$set" : {"text" : "$extended_tweet.full_text", 
         "entities" : "$extended_tweet.entities"}}])
+
+    tweet.update_many({"retweeted_status": {"$exists" : True}}, {"$set" : {"is_a_retweet" : True}})
+    tweet.update_many({"retweeted_status.truncated" : True}, [{"$set" : {"text" : "$retweeted_status.extended_tweet.full_text"}}])
+    tweet.update_many({"retweeted_status.truncated" : False}, [{"$set" : {"text" : "$retweeted_status.text"}}])
 
 def is_a_reply():
 
@@ -48,3 +66,11 @@ def entities_cleaning():
     
     tweet.update_many({"entities.user_mentions" : {"$ne" : None}}, {"$unset" : {"entities.user_mentions.$[].name" : "", 
     "entities.user_mentions.$[].indices" : "", "entities.user_mentions.$[].id_str" : ""}})
+
+def time_to_timestamp():
+    
+    for tweet_object in all_tweets:
+        
+        tweet.update_one({"_id" : tweet_object["_id"]},{ "$set": { 'created_at': datetime.datetime.strptime(str(tweet_object["created_at"]), '%a %b %d %X %z %Y')}})
+
+
