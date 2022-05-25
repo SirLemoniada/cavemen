@@ -11,10 +11,10 @@ def delete_non_english_tweets():
 def removing_duplicates():
 
     duplicates = tweet.aggregate([
-    { "$group": {"_id":{"id":"$id"},"count": {"$sum":1}}},
+    {"$group": {"_id":{"id":"$id"},"count": {"$sum":1}}},
     {"$sort": {"count": -1}},
     {"$match":{"count":{"$gt":1}}}
-    ])
+    ], allowDiskUse = True)
     for doc in duplicates:
         for i in range(doc["count"]-1):
             tweet.delete_one({"id": doc["_id"]["id"]})
@@ -38,7 +38,7 @@ def is_a_reply():
 def tweet_object_cleaning():
 
     tweet.update_many({}, {"$unset" : {"id_str" : "", "in_reply_to_status_id_str" : "", "in_reply_to_user_id_str" : "", "geo" : "", 
-    "coordinates" : "", "timestamp_ms" : "", "quoted_status_permalink" : "", "extended_entities" : "", "extended_tweet" : "",
+    "coordinates" : "", "quoted_status_permalink" : "", "extended_entities" : "", "extended_tweet" : "",
     "display_text_range" : "", "possibly_sensitive" : "", "contributors" : "", "truncated" : "", "source" : "", "quote_count" : "", "reply_count" : "", "retweet_count" : "",
     "favorite_count" : "", "favorited" : "", "retweeted" : "", "retweeted_status" : "", "quoted_status" : "", "quoted_status_id_str" : ""}})
 

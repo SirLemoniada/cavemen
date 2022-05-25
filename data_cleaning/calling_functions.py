@@ -2,8 +2,8 @@ from distutils.command.clean import clean
 import cleaning_and_presentation_functions
 
 cleaning_and_presentation_functions.delete_non_english_tweets()
-cleaning_and_presentation_functions.removing_duplicates()
 cleaning_and_presentation_functions.data_preparation()
+cleaning_and_presentation_functions.removing_duplicates()
 cleaning_and_presentation_functions.is_a_reply()
 cleaning_and_presentation_functions.tweet_object_cleaning()
 cleaning_and_presentation_functions.user_object_cleaning()
