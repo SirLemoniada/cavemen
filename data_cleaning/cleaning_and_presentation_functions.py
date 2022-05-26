@@ -1,7 +1,7 @@
 import index 
 tweet = index.tweets
 all_tweets = tweet.find({})
-
+ 
 def data_preparation():
 
     tweet.delete_many({"id": {"$exists" : False}})
@@ -30,7 +30,7 @@ def user_object_cleaning():
 def tweet_object_cleaning():
 
     tweet.update_many({}, {"$unset" : {"id_str" : "", "in_reply_to_status_id_str" : "", "in_reply_to_user_id_str" : "", "geo" : "", 
-    "coordinates" : "", "timestamp_ms" : "", "quoted_status_permalink" : "", "extended_entities" : "", "extended_tweet" : "",
+    "coordinates" : "", "quoted_status_permalink" : "", "extended_entities" : "", "extended_tweet" : "",
     "display_text_range" : "", "possibly_sensitive" : "", "contributors" : "", "lang" : "", "truncated" : "", "source" : "", "quote_count" : "", "reply_count" : "", "retweet_count" : "",
     "favorite_count" : "", "favorited" : "", "retweeted" : ""}})
 
