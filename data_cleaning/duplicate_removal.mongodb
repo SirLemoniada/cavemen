@@ -1,0 +1,19 @@
+use('cavemen');
+
+db.tweets.aggregate([
+  // discard selection criteria, You can remove "$match" section if you want
+  { $group: { 
+    _id: { id : "$id"}, // can be grouped on multiple properties 
+    dups: {"$addToSet": "$_id"}, 
+    count: {"$sum": 1} 
+  }}, 
+  { $match: { 
+    count: {"$gt": 1}    // Duplicates considered as count greater than one
+  }}
+],
+{allowDiskUse: true}       // For faster processing if set is larger
+)               // You can display result until this and check duplicates 
+.forEach(function(doc) {
+    doc.dups.shift();      // First element skipped for deleting
+    db.tweets.deleteOne({_id : {$in: doc.dups}});  // Delete remaining duplicates
+})
