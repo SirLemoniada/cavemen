@@ -17,7 +17,9 @@ def data_preparation():
     tweet.update_many({"retweeted_status.truncated" : True}, [{"$set" : {"text" : "$retweeted_status.extended_tweet.full_text"}}])
     tweet.update_many({"retweeted_status.truncated" : False}, [{"$set" : {"text" : "$retweeted_status.text"}}])
     tweet.update_many({}, [{ "$set": { "timestamp_ms": { "$toDecimal" : "$timestamp_ms" }}}])
+
     tweet.update_many({}, [{ "$set": { "created_at": { "$toDate" : "$created_at" }}}])
+
 
 def is_a_reply():
 
