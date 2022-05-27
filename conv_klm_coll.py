@@ -14,4 +14,11 @@ def KLM_conversation_start_with_others_function():
             if (reply_to_KLM["in_reply_to_status_id"] == replies["reply"]["id"]) & (reply_to_KLM['user']['id'] == replies['user']['id']):
                 klm.update_one({'reply.id' : reply_to_KLM["in_reply_to_status_id"]}, {"$set" : {"reply_to_reply" : reply_to_KLM}})
 
-tweet.update_many({}, [{ "$set": { "timestamp_ms": int("timestamp_ms")}}])
+#tweet.update_many({}, [{ "$set": { "timestamp_ms": int("timestamp_ms")}}])
+#tweet.update_many({}, [{ "$set": { "timestamp_ms": {"$toDouble": "$timestamp_ms"}}}])
+lst = []
+lst.append((tweet.find_one({})["timestamp_ms"])/100)
+lst.append(tweet.find_one({})["timestamp_ms"])
+print(lst)
+#tweet.update_many({}, [{ "$set": { "created_at": { "$toDate" : "$created_at" }}}])
+
