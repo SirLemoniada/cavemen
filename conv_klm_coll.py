@@ -13,3 +13,5 @@ def KLM_conversation_start_with_others_function():
         for reply_to_KLM in tweet.find({"in_reply_to_user_id":56377143}):
             if (reply_to_KLM["in_reply_to_status_id"] == replies["reply"]["id"]) & (reply_to_KLM['user']['id'] == replies['user']['id']):
                 klm.update_one({'reply.id' : reply_to_KLM["in_reply_to_status_id"]}, {"$set" : {"reply_to_reply" : reply_to_KLM}})
+
+tweet.update_many({}, [{ "$set": { "timestamp_ms": int("timestamp_ms")}}])
