@@ -19,21 +19,25 @@ screen_names = ["KLM", "AirFrance", "British_Airways", "AmericanAir", "Lufthansa
 
 for_plot = tweet.aggregate([
     {"$match": {"user.screen_name":"KLM"}},
-   {"$group" : {"_id":{'month':{"$month":"$created_at"}, 'dayofmon':{"$dayOfMonth":"$created_at"}},"count": {"$sum":1}}},
+   {"$group" : {"_id":{'month':{"$month":"$created_at"}, 'dayofmon':{"$dayOfMonth":"$created_at"},'hour':{"$hour":"$created_at"}},"count": {"$sum":1}}},
    #{"$group" : {"_id":"$lang", "count": {"$sum":1}}},
    #{ "$push": { "created_at": <value1>, ... } }
    {"$sort": {"_id": 1}},
-   {"$project": {"_id": 1, "count":1}}
+   {"$project": {"_id": 0, "count":1}}
 ])
 #"user":"$user.screen_name"
 #'hour':{"$hour":"$created_at"}
+index = pd.date_range(start='1/1/2018', end='1/21/2018')
 list_cursor = list(for_plot)
 df = DataFrame(list_cursor)
-df2 = df.set_index("_id")
-print(df2.head())
+df2 = df.set_index(index)
+#print(df2.head())
 df2['count'].plot()
-# df.plot(kind='bar', x='_id', y='count')
+# df.plot(kind='line', x='_id', y='count')
+plt.title("Over time")
+plt.ylabel("number of tweets per day")
 plt.show()
+print(df2)
 
 
 

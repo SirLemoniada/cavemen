@@ -33,7 +33,7 @@ def time_to_timestamp():
         except:
             pass
 from random import sample
-print(sample({-1,0,1},1))
+
 
 
 
