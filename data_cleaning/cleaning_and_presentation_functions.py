@@ -16,8 +16,11 @@ def data_preparation():
     tweet.update_many({"retweeted_status": {"$exists" : True}}, {"$set" : {"is_a_retweet" : True}})
     tweet.update_many({"retweeted_status.truncated" : True}, [{"$set" : {"text" : "$retweeted_status.extended_tweet.full_text"}}])
     tweet.update_many({"retweeted_status.truncated" : False}, [{"$set" : {"text" : "$retweeted_status.text"}}])
-    tweet.update_many({}, [{ "$set": { "timestamp_ms": { "$toDouble" : "$timestamp_ms" }}}])
     tweet.update_many({}, [{ "$set": { "created_at": { "$toDate" : "$created_at" }}}])
+
+    for tweet_object in all_tweets:
+
+        tweet.update_one({}, {"$set" : {"timestap_ms" : int(tweet_object["timestamp_ms"])}})
 
 def is_a_reply():
 
