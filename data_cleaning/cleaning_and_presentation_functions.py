@@ -16,15 +16,15 @@ def data_preparation():
     tweet.update_many({"retweeted_status": {"$exists" : True}}, {"$set" : {"is_a_retweet" : True}})
     tweet.update_many({"retweeted_status.truncated" : True}, [{"$set" : {"text" : "$retweeted_status.extended_tweet.full_text"}}])
     tweet.update_many({"retweeted_status.truncated" : False}, [{"$set" : {"text" : "$retweeted_status.text"}}])
-    tweet.update_many({}, [{ "$set": { "timestamp_ms": { "$toDecimal" : "$timestamp_ms" }}}])
-
+    tweet.update_many({}, [{ "$set": { "timestamp_ms": { "$toDouble" : "$timestamp_ms" }}}])
     tweet.update_many({}, [{ "$set": { "created_at": { "$toDate" : "$created_at" }}}])
-
 
 def is_a_reply():
 
     tweet.update_many({"in_reply_to_status_id" : None}, {"$unset" : {"in_reply_to_status_id" : "", "in_reply_to_user_id" : "", 
     "in_reply_to_screen_name" : ""}, "$set" : {"is_a_reply" : False}})
+
+    tweet.update_many({"in_reply_to_status_id" : {"$ne" : None}}, {"$set" : {"is_a_reply" : True}})
 
 def place_object():
 
