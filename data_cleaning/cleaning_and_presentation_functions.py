@@ -20,7 +20,7 @@ def data_preparation():
 
     for tweet_object in all_tweets:
 
-        tweet.update_one({}, {"$set" : {"timestap_ms" : int(tweet_object["timestamp_ms"])}})
+        tweet.update_one({"id" : tweet_object["id"]}, {"$set" : {"timestamp_ms" : int(tweet_object["timestamp_ms"])}})
 
 def is_a_reply():
 
