@@ -12,7 +12,6 @@ AirFrance_conversations = cavemen.AirFrance
 AmericanAir_conversations = cavemen.AmericanAir
 Lufthansa_conversations = cavemen.Lufthansa
 AirBerlin_conversations = cavemen.AirBerlin
-AirBerlin_assist_conversations = cavemen.AirBerlin_assist
 easyJet_conversations = cavemen.easyJet
 RyanAir_conversations = cavemen.RyanAir
 SingaporeAir_conversations = cavemen.SingaporeAir

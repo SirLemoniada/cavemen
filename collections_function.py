@@ -7,7 +7,6 @@ AirFrance = index.AirFrance_conversations
 AmericanAir = index.AmericanAir_conversations
 Lufthansa = index.Lufthansa_conversations
 AirBerlin = index.AirBerlin_conversations
-AirBerlin_assist = index.AirBerlin_assist_conversations
 easyJet = index.easyJet_conversations
 RyanAir = index.RyanAir_conversations
 SingaporeAir = index.SingaporeAir_conversations
@@ -99,17 +98,6 @@ def AirBerlin_conversation_start_with_others_function():
         if reply_to_airline != None:
             AirBerlin.update_one({'id' : replies["id"]}, {"$set" : {"depth_3" : reply_to_airline}})
 
-def AirBerlin_assist_conversation_start_with_others_function():
-    for init_tweet in tweet.find({'is_a_reply':False, 'entities.user_mentions.id':2182373406}):
-        AirBerlin_assist.insert_one(init_tweet) 
-        reply = tweet.find_one({'user.id':2182373406, "in_reply_to_status_id":init_tweet['id']})
-        if reply != None:
-            AirBerlin_assist.update_one({'id' : init_tweet['id']}, {"$set" : {"depth_2" : reply}})
-
-    for replies in AirBerlin_assist.find({"depth_2" : {"$exists" : True}}):
-        reply_to_airline = tweet.find_one({"in_reply_to_status_id":replies["depth_2"]["id"]})
-        if reply_to_airline != None:
-            AirBerlin_assist.update_one({'id' : replies["id"]}, {"$set" : {"depth_3" : reply_to_airline}})
 def easyJet_conversation_start_with_others_function():
     for init_tweet in tweet.find({'is_a_reply':False, 'entities.user_mentions.id':38676903}):
         easyJet.insert_one(init_tweet) 
@@ -181,5 +169,3 @@ def VirginAtlantic_conversation_start_with_others_function():
         reply_to_airline = tweet.find_one({"in_reply_to_status_id":replies["depth_2"]["id"]})
         if reply_to_airline != None:
             VirginAtlantic.update_one({'id' : replies["id"]}, {"$set" : {"depth_3" : reply_to_airline}})
-
-AirBerlin_assist_conversation_start_with_others_function()
