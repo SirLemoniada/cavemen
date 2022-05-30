@@ -1,4 +1,3 @@
-from matplotlib import collections
 from index import tweets,klm_conversations,cavemen
 
 klm_obj={'screen_name':'KLM','id':56377143}
@@ -16,14 +15,14 @@ eti_obj={'screen_name':'EtihadAirways','id':45621423}
 vir_obj={'screen_name':'VirginAtlantic','id':20626359}
 
 others=[aa_obj,afr_obj,bra_obj,ala_obj,luf_obj,ezj_obj,rya_obj,sin_obj,qua_obj,eti_obj,vir_obj]
+colls=cavemen.list_collection_names()
+colls.remove('klm');colls.remove('tweets')
 
 def reply_plot():
     klm_tag_number=tweets.count_documents({'entities.user_mentions':{'$in': [klm_obj]}})
     others_tags_number=tweets.count_documents({'entities.user_mentions':{'$in': others}})
     klm_conversations_number=klm_conversations.count_documents({})
 
-    colls=cavemen.list_collection_names()
-    colls.remove('klm');colls.remove('tweets')
     others_conversations_number=0
     for airline in colls:
         airline=getattr(cavemen,airline)
@@ -31,4 +30,28 @@ def reply_plot():
 
     percentage_klm=klm_conversations_number/klm_tag_number
     percentage_others=others_conversations_number/others_tags_number
-    
+
+def sentiment_plot():
+    #depth 3 only for now
+    klm_before_unhappy=klm_conversations.count_documents({'sentiment':'unhappy'})
+    klm_before_neutreal=klm_conversations.count_documents({'sentiment':'neutral'})
+    klm_before_unhappy=klm_conversations.count_documents({'sentiment':'happy'})
+    klm_after_unhappy=klm_conversations.count_documents({'reply_to_reply.sentiment':'unhappy'})
+    klm_after_neutral=klm_conversations.count_documents({'reply_to_reply.sentiment':'neutral'})
+    klm_after_happy=klm_conversations.count_documents({'reply_to_reply.sentiment':'happy'})
+
+    others_before_unhappy=0
+    others_before_neutral=0
+    others_before_happy=0
+    others_after_unhappy=0
+    others_after_neutral=0
+    others_after_happy=0
+
+    for airline in colls:
+        coll=getattr(cavemen,airline)
+        others_before_unhappy+=coll.count_documents({'sentiment':'unhappy'})
+        others_before_neutral+=coll.count_documents({'sentiment':'neutral'})
+        others_before_happy+=coll.count_documents({'sentiment':'happy'})
+        others_before_unhappy+=coll.count_documents({'reply_to_reply.sentiment':'unhappy'})
+        others_before_neutral+=coll.count_documents({'reply_to_reply.sentiment':'neutral'})
+        others_before_happy+=coll.count_documents({'reply_to_reply.sentiment':'happy'})
