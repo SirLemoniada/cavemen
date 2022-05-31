@@ -20,7 +20,7 @@ screen_names = ["KLM", "AirFrance", "British_Airways", "AmericanAir", "Lufthansa
 for_plot = tweet.aggregate([
     {"$match": {"user.screen_name":"KLM"}},
    {"$group" : {"_id":{'month':{"$month":"$created_at"}, 'dayofmon':{"$dayOfMonth":"$created_at"}},"count": {"$sum":1}}},
-   {"$sort": {"_id": 1}},
+   {"$sort": {"timestamp_ms": 1}},
    {"$project": {"_id": 0, "count":1}}
 ])
 for_plot2 = tweet.aggregate([
@@ -41,11 +41,13 @@ for_plot4 = tweet.aggregate([
    {"$sort": {"_id": 1}},
    {"$project": {"_id": 0, "count":1}}
 ])
-index = pd.date_range(start='1/10/2018', end='1/11/2018')
+# index1 = pd.date_range(start='5/22/2019', end='3/30/2020')
+# print(index1)
 
 list_cursor = list(for_plot)
 df = DataFrame(list_cursor)
-
+#print(df.head())
+# Expected 287 rows, received array of length 314
 list_cursor2 = list(for_plot2)
 df2 = DataFrame(list_cursor2)
 
@@ -55,26 +57,26 @@ df3 = DataFrame(list_cursor3)
 list_cursor4 = list(for_plot4)
 df4 = DataFrame(list_cursor4)
 
-#"user":"$user.screen_name"
-#'hour':{"$hour":"$created_at"}
+# "user":"$user.screen_name"
+# 'hour':{"$hour":"$created_at"}
 
-df.set_index(index, inplace=True)
-df2.set_index(index, inplace=True)
-df3.set_index(index, inplace=True)
-df4.set_index(index, inplace=True)
+# df.set_index(index, inplace=True)
+# # df2.set_index(index, inplace=True)
+# # df3.set_index(index, inplace=True)
+# # df4.set_index(index, inplace=True)
 
 fig, ax_combo = plt.subplots(figsize=[10,8])
-df["count"].plot(x=index, ax=ax_combo)
+df["count"].plot( ax=ax_combo)
 df2["count"].plot(x=index,ax=ax_combo)
 df3["count"].plot(x=index,ax=ax_combo)
 df4["count"].plot(x=index,ax=ax_combo)
-
-plt.legend(["KLM","Amercian_Air","British_Airways","SingaporeAir"])
+full_legend = ["KLM","Amercian_Air","British_Airways","SingaporeAir"]
+plt.legend(full_legend)
 plt.title("Tweeting over time")
 plt.ylabel("Number of tweets per day")
 plt.show()
-# print(df2)
-plt.savefig("airline_plot")
+# # print(df2)
+# # plt.savefig("airline_plot")
 
 
 
