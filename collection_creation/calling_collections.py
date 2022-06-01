@@ -1,0 +1,3 @@
+import collection_functions
+
+collection_functions.KLM_conversation_start_with_others_function()

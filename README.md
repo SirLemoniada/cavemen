@@ -24,3 +24,9 @@ Run from `/cavemen/data`
 ```sh
 sh ./load_data
 ```
+
+## Cleaning the data
+1. Install MongoDB Exntension for VSCode 
+2. Connectect to MongoDB thorugh the Exntension
+3. Run calling_functions.py
+4. Run cleaning.mongodb

@@ -6,6 +6,7 @@ client = pymongo.MongoClient(conn_str)
 
 cavemen=client.cavemen
 tweets=cavemen.tweets
+
 KLM_conversations = cavemen.KLM
 British_Airways_conversations = cavemen.British_Airways 
 AirFrance_conversations = cavemen.AirFrance
@@ -18,5 +19,3 @@ SingaporeAir_conversations = cavemen.SingaporeAir
 Qantas_conversations = cavemen.Qantas
 EtihadAirways_conversations = cavemen.EtihadAirways
 VirginAtlantic_conversations = cavemen.VirginAtlantic
-
-
