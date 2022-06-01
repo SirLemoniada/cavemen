@@ -40,7 +40,6 @@ def init_from_others():
         Init_from_others.create_index('id')
         Init_from_others.create_index('user.id')
 
-
 def KLM_conversation_start_with_others_function():
     for depth_2 in Airlines_reply.find({'user.id':56377143}):
 
