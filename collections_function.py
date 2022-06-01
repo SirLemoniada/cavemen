@@ -19,6 +19,7 @@ def KLM_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':56377143, 'is_a_reply':True}):
 
         KLM.insert_one(depth_2)
+        KLM.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -31,6 +32,7 @@ def KLM_conversation_start_with_others_function():
 def British_Airways_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':18332190, 'is_a_reply':True}):
         British_Airways.insert_one(depth_2)
+        British_Airways.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -43,6 +45,7 @@ def British_Airways_conversation_start_with_others_function():
 def AirFrance_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':106062176, 'is_a_reply':True}):
         AirFrance.insert_one(depth_2)
+        AirFrance.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -55,6 +58,7 @@ def AirFrance_conversation_start_with_others_function():
 def AmericanAir_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':22536055, 'is_a_reply':True}):
         AmericanAir.insert_one(depth_2)
+        AmericanAir.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -67,6 +71,7 @@ def AmericanAir_conversation_start_with_others_function():
 def Lufthansa_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':124476322, 'is_a_reply':True}):
         Lufthansa.insert_one(depth_2)
+        Lufthansa.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -79,6 +84,7 @@ def Lufthansa_conversation_start_with_others_function():
 def AirBerlin_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':26223583, 'is_a_reply':True}):
         AirBerlin.insert_one(depth_2)
+        AirBerlin.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -91,6 +97,7 @@ def AirBerlin_conversation_start_with_others_function():
 def easyJet_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':38676903, 'is_a_reply':True}):
         easyJet.insert_one(depth_2)
+        easyJet.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -103,6 +110,7 @@ def easyJet_conversation_start_with_others_function():
 def RyanAir_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':1542862735, 'is_a_reply':True}):
         RyanAir.insert_one(depth_2)
+        RyanAir.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -115,6 +123,7 @@ def RyanAir_conversation_start_with_others_function():
 def SingaporeAir_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':253340062, 'is_a_reply':True}):
         SingaporeAir.insert_one(depth_2)
+        SingaporeAir.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -127,6 +136,7 @@ def SingaporeAir_conversation_start_with_others_function():
 def Qantas_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':218730857, 'is_a_reply':True}):
         Qantas.insert_one(depth_2)
+        Qantas.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -139,6 +149,7 @@ def Qantas_conversation_start_with_others_function():
 def EtihadAirways_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':45621423, 'is_a_reply':True}):
         EtihadAirways.insert_one(depth_2)
+        EtihadAirways.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :
@@ -151,6 +162,7 @@ def EtihadAirways_conversation_start_with_others_function():
 def VirginAtlantic_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':20626359, 'is_a_reply':True}):
         VirginAtlantic.insert_one(depth_2)
+        VirginAtlantic.create_index('id')
         depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
         depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
         if (depth_1 != None) :

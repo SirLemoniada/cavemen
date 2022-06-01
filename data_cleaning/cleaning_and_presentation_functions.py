@@ -137,6 +137,3 @@ def retweeted_status_entities_cleaning():
     for tweet_object in retweeted_tweets:
         tweet.update_one({"_id" : tweet_object["_id"]}, {"$unset" : {"retweeted_status.entities.user_mentions.$[].name" : "", "retweeted_status.entities.user_mentions.$[].indices" : "", "retweeted_status.entities.user_mentions.$[].id_str" : ""}})
 
-    #main branch
-#     tweet.update_many({"entities.user_mentions" : {"$ne" : None}}, {"$unset" : {"entities.user_mentions.$[].name" : "", 
-#     "entities.user_mentions.$[].indices" : "", "entities.user_mentions.$[].id_str" : ""}})
