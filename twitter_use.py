@@ -1,4 +1,5 @@
 from index import tweets,klm_conversations,cavemen
+import numpy as np
 
 klm_obj={'screen_name':'KLM','id':56377143}
 
@@ -32,7 +33,9 @@ def reply_plot():
     percentage_others=others_conversations_number/others_tags_number
 
 def sentiment_plot():
-    #depth 3 only for now
+    tweets.create_index('sentiment')
+    tweets.create_index('reply_to_reply.sentiment')
+
     klm_before_unhappy=klm_conversations.count_documents({'sentiment':'unhappy'})
     klm_before_neutreal=klm_conversations.count_documents({'sentiment':'neutral'})
     klm_before_unhappy=klm_conversations.count_documents({'sentiment':'happy'})
@@ -52,6 +55,14 @@ def sentiment_plot():
         others_before_unhappy+=coll.count_documents({'sentiment':'unhappy'})
         others_before_neutral+=coll.count_documents({'sentiment':'neutral'})
         others_before_happy+=coll.count_documents({'sentiment':'happy'})
-        others_before_unhappy+=coll.count_documents({'reply_to_reply.sentiment':'unhappy'})
-        others_before_neutral+=coll.count_documents({'reply_to_reply.sentiment':'neutral'})
-        others_before_happy+=coll.count_documents({'reply_to_reply.sentiment':'happy'})
+        others_after_unhappy+=coll.count_documents({'reply_to_reply.sentiment':'unhappy'})
+        others_after_neutral+=coll.count_documents({'reply_to_reply.sentiment':'neutral'})
+        others_after_happy+=coll.count_documents({'reply_to_reply.sentiment':'happy'})
+
+def reply_times():
+    klm_times=np.array()
+    others_times=np.array()
+    klm=klm_conversations.find({'reply':{'$ne': None }})
+    print(klm[0])
+
+reply_times()
