@@ -17,10 +17,11 @@ vir_obj={'screen_name':'VirginAtlantic','id':20626359}
 
 others=[aa_obj,afr_obj,bra_obj,ala_obj,luf_obj,ezj_obj,rya_obj,sin_obj,qua_obj,eti_obj,vir_obj]
 colls=cavemen.list_collection_names()
-colls.remove('klm');colls.remove('tweets')
+colls.remove('KLM');colls.remove('tweets')
 
 def reply_plot():
-    klm_tag_number=tweets.count_documents({'entities.user_mentions':{'$in': [klm_obj]}})
+    tweets.create_index('entities.user_mentions')
+    klm_tag_number=klm_conversations.count_documents({'entities.user_mentions':{'$in': [klm_obj]}})
     others_tags_number=tweets.count_documents({'entities.user_mentions':{'$in': others}})
     klm_conversations_number=klm_conversations.count_documents({})
 
@@ -31,18 +32,24 @@ def reply_plot():
 
     percentage_klm=klm_conversations_number/klm_tag_number
     percentage_others=others_conversations_number/others_tags_number
+    print(percentage_klm,percentage_others)
 
 def sentiment_plot():
-    tweets.create_index('sentiment')
-    tweets.create_index('reply_to_reply.sentiment')
+    klm_conversations.create_index('depth_1.sentiment')
+    klm_conversations.create_index('depth_3.sentiment')
 
-    klm_before_unhappy=klm_conversations.count_documents({'sentiment':'unhappy'})
-    klm_before_neutreal=klm_conversations.count_documents({'sentiment':'neutral'})
-    klm_before_unhappy=klm_conversations.count_documents({'sentiment':'happy'})
-    klm_after_unhappy=klm_conversations.count_documents({'reply_to_reply.sentiment':'unhappy'})
-    klm_after_neutral=klm_conversations.count_documents({'reply_to_reply.sentiment':'neutral'})
-    klm_after_happy=klm_conversations.count_documents({'reply_to_reply.sentiment':'happy'})
-
+    klm_before_unhappy=klm_conversations.count_documents({'depth_1.sentiment':-1})
+    print('done')
+    klm_before_neutreal=klm_conversations.count_documents({'depth_1.sentiment':0})
+    print('done')
+    klm_before_happy=klm_conversations.count_documents({'depth_1.sentiment':1})
+    print('done')
+    klm_after_unhappy=klm_conversations.count_documents({'depth_3.sentiment':-1})
+    print('done')
+    klm_after_neutral=klm_conversations.count_documents({'depth_3.sentiment':0})
+    print('done')
+    klm_after_happy=klm_conversations.count_documents({'depth_3.sentiment':1})
+    print('done')
     others_before_unhappy=0
     others_before_neutral=0
     others_before_happy=0
@@ -51,18 +58,30 @@ def sentiment_plot():
     others_after_happy=0
 
     for airline in colls:
-        coll=getattr(cavemen,airline)
-        others_before_unhappy+=coll.count_documents({'sentiment':'unhappy'})
-        others_before_neutral+=coll.count_documents({'sentiment':'neutral'})
-        others_before_happy+=coll.count_documents({'sentiment':'happy'})
-        others_after_unhappy+=coll.count_documents({'reply_to_reply.sentiment':'unhappy'})
-        others_after_neutral+=coll.count_documents({'reply_to_reply.sentiment':'neutral'})
-        others_after_happy+=coll.count_documents({'reply_to_reply.sentiment':'happy'})
+        airline=getattr(cavemen,airline)
+        airline.create_index('depth_1.sentiment')
+        airline.create_index('depth_3.sentiment')
+        others_before_unhappy+=airline.count_documents({'depth_1.sentiment':-1})
+        print('done')
+        others_before_neutral+=airline.count_documents({'depth_1.sentiment':0})
+        print('done')
+        others_before_happy+=airline.count_documents({'depth_1.sentiment':1})
+        print('done')
+        others_after_unhappy+=airline.count_documents({'depth_3.sentiment':-1})
+        print('done')
+        others_after_neutral+=airline.count_documents({'depth_3.sentiment':0})
+        print('done')
+        others_after_happy+=airline.count_documents({'depth_3.sentiment':1})
+    others=[others_before_unhappy,others_before_neutral,others_before_happy,others_after_unhappy,others_after_neutral,others_after_happy]
+    klm=[klm_before_unhappy,klm_before_neutreal,klm_before_happy,klm_after_unhappy,klm_after_neutral,klm_after_happy]
+    print(klm,others)
 
-def reply_times():
-    klm_times=np.array()
-    others_times=np.array()
-    klm=klm_conversations.find({'reply':{'$ne': None }})
-    print(klm[0])
+# def reply_times():
+#     klm_times=np.array()
+#     others_times=np.array()
+#     klm=klm_conversations.find({'reply':{'$ne': None }})
+#     print(klm[0])
 
-reply_times()
+# reply_times()
+# sentiment_plot()
+reply_plot()
