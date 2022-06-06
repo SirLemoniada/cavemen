@@ -1,4 +1,4 @@
-from index import tweets,klm_conversations,cavemen
+from index import tweets,cavemen
 # import numpy as np
 
 klm_obj={'screen_name':'KLM','id':56377143}
@@ -18,7 +18,7 @@ vir_obj={'screen_name':'VirginAtlantic','id':20626359}
 others=[aa_obj,afr_obj,bra_obj,ala_obj,luf_obj,ezj_obj,rya_obj,sin_obj,qua_obj,eti_obj,vir_obj]
 colls=cavemen.list_collection_names()
 colls.remove('tweets')
-
+print("I like it chunky")
 def reply_plot():
     tweets.create_index('entities.user_mentions')
     tags={};conversations={};percentage={}
@@ -60,60 +60,29 @@ def reply_plot():
             others_conversations+=conversations[airline]
     
     others_percentage=others_conversations/others_tags
-    
+
     print(percentage,others_percentage)
 
 
 
 
 def sentiment_plot():
-    klm_conversations.create_index('depth_1.sentiment')
-    klm_conversations.create_index('depth_3.sentiment')
-
-    klm_before_unhappy=klm_conversations.count_documents({'depth_1.sentiment':-1})
-    print('done')
-    klm_before_neutreal=klm_conversations.count_documents({'depth_1.sentiment':0})
-    print('done')
-    klm_before_happy=klm_conversations.count_documents({'depth_1.sentiment':1})
-    print('done')
-    klm_after_unhappy=klm_conversations.count_documents({'depth_3.sentiment':-1})
-    print('done')
-    klm_after_neutral=klm_conversations.count_documents({'depth_3.sentiment':0})
-    print('done')
-    klm_after_happy=klm_conversations.count_documents({'depth_3.sentiment':1})
-    print('done')
-    others_before_unhappy=0
-    others_before_neutral=0
-    others_before_happy=0
-    others_after_unhappy=0
-    others_after_neutral=0
-    others_after_happy=0
-
+    overall_sentiment={}
+    
     for airline in colls:
-        airline=getattr(cavemen,airline)
-        airline.create_index('depth_1.sentiment')
-        airline.create_index('depth_3.sentiment')
-        others_before_unhappy+=airline.count_documents({'depth_1.sentiment':-1})
-        print('done')
-        others_before_neutral+=airline.count_documents({'depth_1.sentiment':0})
-        print('done')
-        others_before_happy+=airline.count_documents({'depth_1.sentiment':1})
-        print('done')
-        others_after_unhappy+=airline.count_documents({'depth_3.sentiment':-1})
-        print('done')
-        others_after_neutral+=airline.count_documents({'depth_3.sentiment':0})
-        print('done')
-        others_after_happy+=airline.count_documents({'depth_3.sentiment':1})
-    others=[others_before_unhappy,others_before_neutral,others_before_happy,others_after_unhappy,others_after_neutral,others_after_happy]
-    klm=[klm_before_unhappy,klm_before_neutreal,klm_before_happy,klm_after_unhappy,klm_after_neutral,klm_after_happy]
-    print(klm,others)
+        sentiment_negative_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1})
+        sentiment_negative_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':-1})
+        sentiment_neutral_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':0})
+        sentiment_neutral_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':0})
+        sentiment_positive_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':1})
+        sentiment_positive_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':1})
 
-# def reply_times():
-#     klm_times=np.array()
-#     others_times=np.array()
-#     klm=klm_conversations.find({'reply':{'$ne': None }})
-#     print(klm[0])
+        overall_sentiment[airline]=[sentiment_negative_after+sentiment_negative_before,sentiment_neutral_after+sentiment_neutral_before,sentiment_positive_after+sentiment_positive_before]
+    
+    #sentiment-1 -> 1
+    improvement={}
+    for airline in colls:
+        improvement[airline]=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':1})/getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':{"$exists":True}})
+    print(overall_sentiment)
 
-# reply_times()
-# sentiment_plot()
-reply_plot()
+sentiment_plot()
