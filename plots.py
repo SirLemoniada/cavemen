@@ -1,5 +1,8 @@
+from cmath import log
 import index #import index.py file
 tweet = index.tweets #import tweets variable from index.py file and assign to tweet
+import pymongo
+
 KLM = index.KLM_conversations
 British_Airways = index.British_Airways_conversations
 AirFrance = index.AirFrance_conversations
@@ -16,20 +19,34 @@ import matplotlib.pyplot as plt
 import numpy as np 
 
 def reply_time_in_hours():
+    
+    KLM.create_index([('timestamp_ms',pymongo.ASCENDING)],name='d1')
+    KLM.create_index([('depth_1',pymongo.ASCENDING),('timestamp_ms',pymongo.ASCENDING)],name='d3')
+    British_Airways.create_index([('timestamp_ms',pymongo.ASCENDING)],name='d1')
+    British_Airways.create_index([('depth_1',pymongo.ASCENDING),('timestamp_ms',pymongo.ASCENDING)],name='d3')
     reply_time_list_KLM = []
     reply_time_list_British_Airways = []
-    for reply_time in KLM.find({'reply':{'$exists':True}}):
-        reply_time_list_KLM.append((int(reply_time['reply']['timestamp_ms']) -int(reply_time['timestamp_ms']))/1000/60/60)
+    for reply_time in KLM.find({}):
+        time = (int(reply_time['timestamp_ms']) -int(reply_time['depth_1']['timestamp_ms']))/1000/60/60
+        if time <= 24:
+            reply_time_list_KLM.append(time)
         
-    for reply_time in British_Airways.find({'reply':{'$exists':True}}):
-        reply_time_list_British_Airways.append((int(reply_time['reply']['timestamp_ms']) -int(reply_time['timestamp_ms']))/1000/60/60)
+    for reply_time in British_Airways.find({}):
+        time = (int(reply_time['timestamp_ms']) -int(reply_time['depth_1']['timestamp_ms']))/1000/60/60
+        if time <= 24:
+            reply_time_list_British_Airways.append(time)
 
-    plt.boxplot([reply_time_list_KLM,reply_time_list_British_Airways], labels = ['KLM','British_Airways'], showmeans=True)
-    plt.title('Reply time in hours')
-    plt.ylabel('Hours')
-    plt.ylim(0,15)
+    fig, axes = plt.subplots(2, 2, sharey=True)
+    fig.suptitle('Airlines reply to users in hours')
+    fig.tight_layout() 
+    axes[0,0].hist(reply_time_list_KLM, bins = [0,2,4,6,8,10,12,14,16,18,20,22,24])
+    axes[0,0].set_title('KLM')
+    axes[0,0].set_ylabel('tweets')
+    axes[0,1].hist(reply_time_list_British_Airways, bins = [0,2,4,6,8,10,12,14,16,18,20,22,24])
+    axes[0,1].set_title('British_Airways')
     plt.show()
 
+reply_time_in_hours()
 def users_reply_to_init_airline():
     reply_to_KLM = []
     reply_to_British_Airways = []
@@ -52,18 +69,16 @@ def total_tweets_in_each_collection():
     plt.show()
 
 def conversation_length():
-    length = ['One', 'Two', 'Three']
+    length = ['Two', 'Three']
     KLM_total = KLM.count_documents({})
-    KLM_depth_3 = KLM.count_documents({'reply_to_reply':{'$exists':True}})
-    KLM_depth_2 = (KLM.count_documents({'reply':{'$exists':True}}) - KLM_depth_3)
-    KLM_depth_1 = KLM.count_documents({'reply':{'$exists':False}})
-    KLM_length = [KLM_depth_1,KLM_depth_2,KLM_depth_3]
+    KLM_depth_3 = KLM.count_documents({'depth_3':{'$exists':True}})
+    KLM_depth_1 = (KLM.count_documents({'depth_1':{'$exists':True}}) - KLM_depth_3)
+    KLM_length = [KLM_depth_1,KLM_depth_3]
     
     BA_total = British_Airways.count_documents({})
-    BA_depth_3 = British_Airways.count_documents({'reply_to_reply':{'$exists':True}})
-    BA_depth_2 = (British_Airways.count_documents({'reply':{'$exists':True}}) - BA_depth_3)
-    BA_depth_1 = British_Airways.count_documents({'reply':{'$exists':False}})
-    BA_length = [BA_depth_1,BA_depth_2,BA_depth_3]
+    BA_depth_3 = British_Airways.count_documents({'depth_3':{'$exists':True}})
+    BA_depth_1 = (British_Airways.count_documents({'depth_1':{'$exists':True}}) - BA_depth_3)
+    BA_length = [BA_depth_1,BA_depth_3]
     
     X_axis = np.arange(len(length))
     plt.bar(X_axis-0.2, KLM_length, 0.4, label = 'KLM')
