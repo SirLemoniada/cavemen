@@ -17,11 +17,3 @@ use('cavemen');
       doc.dups.shift();      // First element skipped for deleting
       db.tweets.deleteOne({_id : {$in: doc.dups}});  // Delete remaining duplicates
   })
-
-
-
-
-
-
-
-
