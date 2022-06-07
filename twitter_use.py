@@ -93,18 +93,20 @@ def sentiment_plot():
     y=improvement.values()
     df=pd.DataFrame(y,x)
     df.columns=['percentage of improved tweets']
-    airlines=['Etihad','Ryan','AirFr','KLM','AA','Luft','SinAir','BritAir','easyJet','Qantas','Virgin']
+    airlines=['EtihadAirways','RyanAir','AirFrance','KLM','AmericanAir','Lufthansa','SingaporeAir','British_Airways','easyJet','Qantas','VirginAtlantic']
     df_sorted=df.sort_values('percentage of improved tweets')
-    font = {'family' : 'normal', 'weight' : 'bold','size'   : 12}
+    # font = {'family' : 'normal', 'weight' : 'normal','size'   : 12}
 
-    matplotlib.rc('font', **font)
+    # matplotlib.rc('font', **font)
 
-    plt.figure(figsize=(10,7))
-    plt.bar(list(df_sorted.index),height=list(df_sorted['percentage of improved tweets']),color=['blue','blue','blue','orange','blue','blue','blue','blue','blue','blue','blue'])
+    plt.figure(figsize=(12,8))
+    plt.bar(list(df_sorted.index),height=list(df_sorted['percentage of improved tweets']),color=['orange','orange','orange','blue','orange','orange','orange','orange','orange','orange','orange'])
     plt.ylim(bottom=0.3)
-    plt.xticks(ticks=np.arange(11),labels=airlines)
-    plt.title('negative -> positive sentiment')
-    plt.show()
+    plt.ylabel('% '+'of conversations',size=15)
+    plt.xlabel('Airlines',size=15)
+    plt.xticks(ticks=np.arange(11),labels=airlines,rotation=18,size=12)
+    plt.title('negative ⟶ positive sentiment',size=17)
+    # plt.show()
     plt.savefig('improved')
 
 sentiment_plot()
