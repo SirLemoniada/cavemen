@@ -1,3 +1,4 @@
+import matplotlib
 from index import tweets,cavemen
 import numpy as np
 import matplotlib.pyplot as plt
@@ -87,13 +88,17 @@ def sentiment_plot():
     improvement={}
     for airline in colls:
         improvement[airline]=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':1})/getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':{"$exists":True}})
-        
+    
     x=improvement.keys()
     y=improvement.values()
     df=pd.DataFrame(y,x)
     df.columns=['percentage of improved tweets']
     airlines=['Etihad','Ryan','AirFr','KLM','AA','Luft','SinAir','BritAir','easyJet','Qantas','Virgin']
     df_sorted=df.sort_values('percentage of improved tweets')
+    font = {'family' : 'normal', 'weight' : 'bold','size'   : 12}
+
+    matplotlib.rc('font', **font)
+
     plt.figure(figsize=(10,7))
     plt.bar(list(df_sorted.index),height=list(df_sorted['percentage of improved tweets']),color=['blue','blue','blue','orange','blue','blue','blue','blue','blue','blue','blue'])
     plt.ylim(bottom=0.3)
