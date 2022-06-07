@@ -1,44 +1,52 @@
+import secrets
 
-"""{"airfrance" :0.02108433734939759,
-"KLM" :0.12872304005477575,
-"British_Airways": 0.1633288401052699,
-"AmericanAir": 0.14675498375899623,
-"lufthansa": 0.14061184395172607,
-"easyJet" :0.15779145185431565,
-"Ryanair" :0.10893137394778142,
-"SingaporeAir" :0.21460552725027018,
-"Qantas" :0.14218579234972678,
-"etihad": 0.311046511627907,
-"VirginAtlantic" :0.3016922471467926}"""
-
+from matplotlib.ft2font import BOLD
+import index #import index.py file
+tweet = index.tweets #import tweets variable from index.py file and assign to tweet
+import pprint
 import numpy as np
 import matplotlib.pyplot as plt
- 
+
   
 # creating the dataset
-data = {"airfrance" :0.02108433734939759,
-"KLM" :0.12872304005477575,
-"British_Airways": 0.1633288401052699,
-"AmericanAir": 0.14675498375899623,
-"lufthansa": 0.14061184395172607,
-"easyJet" :0.15779145185431565,
-"Ryanair" :0.10893137394778142,
-"SingaporeAir" :0.21460552725027018,
-"Qantas" :0.14218579234972678,
-"etihad": 0.311046511627907,
-"VirginAtlantic" :0.3016922471467926}
 
-data_sorted = dict(sorted(data.items(), key=lambda item: item[1]))
-airlines = list(data_sorted.keys())
-means = list(data_sorted.values())
+
+
+
 #fig = plt.figure(figsize = (10, 5))
  
-# creating the bar plot
-plt.bar(airlines, means, color ='maroon',
-        width = 0.6)
+
  
-plt.xlabel("Airlines")
-plt.ylabel("Mean sentiment between -1 and 1")
-plt.title("Mean sentiment per airline")
+#plt.xlabel("Airlines")
+
 #plt.xticks(rotation = 25)
+#plt.show()
+
+
+screen_names = ["KLM", "airfrance", "British_Airways", "AmericanAir", "lufthansa", 
+"easyJet","Ryanair","SingaporeAir", "Qantas", "EtihadAirways", "VirginAtlantic"]
+result = {}
+for name in screen_names:
+    for_plot = tweet.aggregate([
+        {"$match": {'is_a_reply':False, 'entities.user_mentions.screen_name':name}},
+        {"$group":{"_id": "$lang","avgsent":{"$avg":"$sentiment"}}},
+    ])
+    for doc in for_plot:
+        result[name] = doc["avgsent"]
+
+result_sorted = dict(sorted(result.items(), key=lambda item: item[1]))
+airlines = list(result_sorted.keys())
+means = list(result_sorted.values())
+
+# creating the bar plot
+font = {"family": "normal", "weight":"bold", 'size':12}
+plt.rc("font", **font)
+plt.figure(figsize=(10,7))
+plt.bar(airlines, means,color=['maroon','maroon','maroon','maroon','maroon','maroon','maroon','orange','maroon','maroon','maroon'],
+        width = 0.6)
+
+plt.ylabel("Mean sentiment", size=18)
+plt.title("Mean sentiment per airline", size = 18)
+plt.xticks(rotation = 25)
 plt.show()
+

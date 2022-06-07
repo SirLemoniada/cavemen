@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import pprint
 from pandas import DataFrame
 for_plot = tweet.aggregate([
-    {"$match": {'is_a_reply':False, 'entities.user_mentions.id':56377143}},
-   {"$group" : {"_id":{"year":{"$year":"$created_at"},'month':{"$month":"$created_at"}, 'dayofmon':{"$dayOfMonth":"$created_at"}},"avg": {"$avg":"$sentiment"}}},
+    {"$match": {'is_a_reply':False, 'entities.user_mentions.id':22536055}},
+   {"$group" : {"_id":{"year":{"$year":"$created_at"},'month':{"$month":"$created_at"}, "week": {"$dayOfMonth":"$created_at"}},"avg": {"$avg":"$sentiment"}}},
    {"$sort": {"_id": 1}},
    {"$project": {"_id": 1, "avg":1}}
 ])
