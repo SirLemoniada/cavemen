@@ -39,14 +39,18 @@ airlines = list(result_sorted.keys())
 means = list(result_sorted.values())
 
 # creating the bar plot
-font = {"family": "normal", "weight":"bold", 'size':12}
-plt.rc("font", **font)
-plt.figure(figsize=(10,7))
-plt.bar(airlines, means,color=['maroon','maroon','maroon','maroon','maroon','maroon','maroon','orange','maroon','maroon','maroon'],
-        width = 0.6)
+##font = {"family": "normal", "weight":"bold", 'size':12}
+#plt.rc("font", **font)
 
-plt.ylabel("Mean sentiment", size=18)
-plt.title("Mean sentiment per airline", size = 18)
-plt.xticks(rotation = 25)
+fig, ax = plt.subplots()
+plot = ax.bar(airlines, means,color=['orange','orange','orange','orange','orange','orange','orange','blue','orange','orange','orange'])
+for plot in ax.containers:
+      ax.bar_label(plot)
+plt.ylabel("Mean sentiment", size=15, weight='bold')
+plt.title("Mean sentiment per airline", size = 17, weight='bold')
+plt.xticks(size=12, rotation = 15)
+plt.xlabel("Airlines", size=15, weight='bold')
 plt.show()
+
+
 
