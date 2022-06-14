@@ -6,11 +6,12 @@ import pprint
 from pandas import DataFrame
 for_plot = tweet.aggregate([
     {"$match": {'is_a_reply':False, 'entities.user_mentions.id':22536055}},
-   {"$group" : {"_id":{"year":{"$year":"$created_at"},'month':{"$month":"$created_at"}, "week": {"$dayOfMonth":"$created_at"}},"avg": {"$avg":"$sentiment"}}},
+   {"$group" : {"_id":{"year":{"$year":"$created_at"},'month':{"$month":"$created_at"}, "week": {"$week":"$created_at"}},"avg": {"$avg":"$sentiment"}}},
    {"$sort": {"_id": 1}},
    {"$project": {"_id": 1, "avg":1}}
 ])
 list_cursor = list(for_plot)
 df = DataFrame(list_cursor)
 df["avg"].plot()
+plt.title("sentiment over time avg per week")
 plt.show()
