@@ -98,15 +98,18 @@ def sentiment_plot():
     # font = {'family' : 'normal', 'weight' : 'normal','size'   : 12}
 
     # matplotlib.rc('font', **font)
-
-    plt.figure(figsize=(12,8))
-    plt.bar(list(df_sorted.index),height=list(df_sorted['percentage of improved tweets']),color=['orange','orange','orange','blue','orange','orange','orange','orange','orange','orange','orange'])
+    # print(df_sorted['percentage of improved tweets'])
+    # plt.figure(figsize=(12,8))
+    fig, ax=plt.subplots()
+    plot=ax.bar(list(df_sorted.index),height=list(df_sorted['percentage of improved tweets']),color=['orange','orange','orange','blue','orange','orange','orange','orange','orange','orange','orange'])
     plt.ylim(bottom=0.3)
-    plt.ylabel('% '+'of conversations',size=15)
-    plt.xlabel('Airlines',size=15)
+    plt.ylabel('% '+'of conversations',size=15, weight='bold')
+    plt.xlabel('Airlines',size=15, weight='bold')
     plt.xticks(ticks=np.arange(11),labels=airlines,rotation=18,size=12)
-    plt.title('negative ⟶ positive sentiment',size=17)
-    # plt.show()
-    plt.savefig('improved')
+    plt.title('percentage of people with improved sentiment throught conversation',size=17, weight='bold')
+    for plot in ax.containers:
+        ax.bar_label(plot)
+    plt.show()
+    # plt.savefig('improved')
 
 sentiment_plot()
