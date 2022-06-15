@@ -7,7 +7,6 @@ British_Airways = index.British_Airways_conversations
 AirFrance = index.AirFrance_conversations
 AmericanAir = index.AmericanAir_conversations
 Lufthansa = index.Lufthansa_conversations
-AirBerlin = index.AirBerlin_conversations
 easyJet = index.easyJet_conversations
 RyanAir = index.RyanAir_conversations
 SingaporeAir = index.SingaporeAir_conversations
@@ -80,19 +79,6 @@ def Lufthansa_conversation_start_with_others_function():
                 Lufthansa.update_one({'id' : depth_2['id']}, {"$set" : {"depth_3" : depth_3}})      
         else:
             Lufthansa.delete_one({'id' : depth_2['id']}) 
-
-def AirBerlin_conversation_start_with_others_function():
-    for depth_2 in tweet.find({'user.id':26223583, 'is_a_reply':True}):
-        AirBerlin.insert_one(depth_2)
-        AirBerlin.create_index('id')
-        depth_1 = tweet.find_one({"id":depth_2['in_reply_to_status_id'], 'is_a_reply':False})
-        depth_3 = tweet.find_one({'user.id':depth_2['in_reply_to_user_id'], "in_reply_to_status_id" : depth_2["id"]})
-        if (depth_1 != None) :
-            AirBerlin.update_one({'id' : depth_2['id']}, {"$set" : {"depth_1" : depth_1}})  
-            if (depth_3 != None) :
-                AirBerlin.update_one({'id' : depth_2['id']}, {"$set" : {"depth_3" : depth_3}})      
-        else:
-            AirBerlin.delete_one({'id' : depth_2['id']})
 
 def easyJet_conversation_start_with_others_function():
     for depth_2 in tweet.find({'user.id':38676903, 'is_a_reply':True}):

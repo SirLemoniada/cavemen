@@ -4,8 +4,6 @@ import re
 tweet = index.tweets
 sntm = index.sentiment_analysis
 
-# tweet.update_many({"sentiment" : {"$exists" : True}}, {"$unset" : {"sentiment" : ""}})
-
 def clean_tweet(tweet):
     return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) | (\w +:\ / \ / \S +)", " ", tweet).split())
 
