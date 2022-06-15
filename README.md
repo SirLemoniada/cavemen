@@ -1,4 +1,4 @@
-# cavemen - DBL Challange
+# Pre-process
 ## Loading the data
 1. Make sure MongoDB is running
 2. Create `data` folder and put all JSON files inside
@@ -11,7 +11,6 @@ Run from `/cavemen`:
 chmod +x load_data
 sh ./load_data
 ```
-
 ### Windows
 Create `load_data.bat` file in `data` folder\
 Run from `\cavemen\data`
@@ -25,8 +24,15 @@ Run from `/cavemen/data`
 sh ./load_data
 ```
 
-## Cleaning the data
+## Steps for cleaning data, doing sentiment analysis, and grouping conversations  
 1. Install MongoDB Exntension for VSCode 
 2. Connectect to MongoDB thorugh the Exntension
-3. Run calling_functions.py
-4. Run cleaning.mongodb
+3. Go to Code_for_cleaning file
+4. Run Calling_functions.py
+5. Run Cleaning.mongodb
+6. Go to Code_for_sentiment file
+7. Run Sa_textbob.py
+8. Go to Code_for_conversations file
+9. Run Calling_functions.py
+10. If you want to augment the data (add replying time), go to Code_for_augmentation file
+11. Run Augmentation.py
