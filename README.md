@@ -29,4 +29,4 @@ sh ./load_data
 1. Install MongoDB Exntension for VSCode 
 2. Connectect to MongoDB thorugh the Exntension
 3. Run calling_functions.py
-4. Run duplicates.mongodb
+4. Run cleaning.mongodb
