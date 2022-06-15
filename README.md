@@ -34,3 +34,5 @@ sh ./load_data
 7. Run Sa_textbob.py
 8. Go to Code_for_conversations file
 9. Run Calling_functions.py
+10. If you want to augment the data (add replying time), go to Code_for_augmentation file
+11. Run Augmentation.py
