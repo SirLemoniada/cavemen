@@ -31,6 +31,6 @@ sh ./load_data
 4. Run Calling_functions.py
 5. Run Cleaning.mongodb
 6. Go to Code_for_sentiment file
-7. Run sa_textbob.py
+7. Run Sa_textbob.py
 8. Go to Code_for_conversations file
 9. Run Calling_functions.py
