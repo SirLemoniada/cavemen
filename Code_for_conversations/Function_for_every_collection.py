@@ -1,5 +1,3 @@
-from this import d
-from unittest import skip
 import index #import index.py file
 import pymongo
 tweet = index.tweets #import tweets variable from index.py file and assign to tweet
