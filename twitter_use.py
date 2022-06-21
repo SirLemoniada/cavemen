@@ -70,9 +70,10 @@ def reply_plot():
 
 
 def sentiment_plot():
-    overall_sentiment={}
-    tab=[0,0,0]
     conversations={}
+    k=0
+    fig,ax=plt.subplots(4,3,sharex=True,sharey=True)
+    fig.suptitle('Change in sentiment throughout the conversations', fontsize=20, weight='bold')
     for airline in colls:
         sentiment_negative_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':{"$exists":True}})
         sentiment_negative_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':-1})
@@ -80,6 +81,7 @@ def sentiment_plot():
         sentiment_neutral_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':0})
         sentiment_positive_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':1,'depth_3.sentiment':{"$exists":True}})
         sentiment_positive_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':1})
+        
         conversations[airline]=getattr(cavemen,airline).count_documents({'depth_3.sentiment':{'$exists':True}})
 
         negative_before=100*sentiment_negative_before/conversations[airline]
@@ -90,64 +92,39 @@ def sentiment_plot():
         neutral_after=100*sentiment_neutral_after/conversations[airline]
         positive_after=100*sentiment_positive_after/conversations[airline]
 
-        fig,ax=plt.subplots()
-        ax.broken_barh([(0,negative_before),(negative_before,negative_before+neutral_before),(neutral_before+negative_before,negative_before+neutral_before+positive_before)],[3,1],facecolors=('#6259D8', '#E53F08', '#FDB200'))
-        ax.broken_barh([(0,negative_after),(negative_after,negative_after+neutral_after),(neutral_after+negative_after,negative_after+neutral_after+positive_after)],[1,1],facecolors=('#6259D8', '#E53F08', '#FDB200'))
+        ax[k%4,k//4].broken_barh([(0,negative_before),(negative_before,negative_before+neutral_before),(neutral_before+negative_before,negative_before+neutral_before+positive_before)],[3,1],facecolors=('#6259D8', '#E53F08', '#FDB200'))
+        ax[k%4,k//4].broken_barh([(0,negative_after),(negative_after,negative_after+neutral_after),(neutral_after+negative_after,negative_after+neutral_after+positive_after)],[1,1],facecolors=('#6259D8', '#E53F08', '#FDB200'))
 
-        ax.set_yticks([1.5,3.5])
-        ax.set_xticks([0, 25, 50, 75, 100])
-        ax.set_xticklabels(['0%','25%','50%','75%','100%'])
-        ax.set_yticklabels(['after','before'])
-        ax.set_axisbelow(True)
+        ax[k%4,k//4].set_yticks([1.5,3.5])
+        ax[k%4,k//4].set_xticks([0, 25, 50, 75, 100])
+        ax[k%4,k//4].set_xticklabels(['0%','25%','50%','75%','100%'])
+        ax[k%4,k//4].set_yticklabels(['after','before'],weight="bold")
+        ax[k%4,k//4].set_axisbelow(True)
         leg1 = mpatches.Patch(color='#6259D8', label='negative')
         leg2 = mpatches.Patch(color='#E53F08', label='neutral')
         leg3 = mpatches.Patch(color='#FDB200', label='positive')
-        ax.set_title(airline)
+        ax[k%4,k//4].set_title(airline,weight="bold")
         #before
-        ax.text(negative_before/2-2,3.45,str(int(negative_before))+'%')
-        ax.text((2*negative_before+neutral_before)/2-2,3.45,str(int(neutral_before))+'%')
-        ax.text((negative_before*2+neutral_before*2+positive_before)/2-2,3.45,str(int(positive_before))+'%')
+        ax[k%4,k//4].text(negative_before/2-2,3.45,str(int(negative_before))+'%',weight="bold")
+        ax[k%4,k//4].text((2*negative_before+neutral_before)/2-2,3.45,str(int(neutral_before))+'%',weight="bold")
+        ax[k%4,k//4].text((negative_before*2+neutral_before*2+positive_before)/2-2,3.45,str(int(positive_before))+'%',weight="bold")
+
+        ax[k%4,k//4].annotate(arrowprops={'arrowstyle': '<-', 'lw': 2,'color':'green'},xy=(0,2.5),text=str(int(negative_before-negative_after))+'%',va='center',ha='center',xytext=(negative_before-negative_after+5,2.5))
         #after
-        ax.text(negative_after/2-2,1.45,str(int(negative_after))+'%')
-        ax.text((2*negative_after+neutral_after)/2-2,1.45,str(int(neutral_after))+'%')
-        ax.text((negative_after*2+neutral_after*2+positive_after)/2-2,1.45,str(int(positive_after))+'%')
+        ax[k%4,k//4].text(negative_after/2-2,1.45,str(int(negative_after))+'%',weight="bold")
+        ax[k%4,k//4].text((2*negative_after+neutral_after)/2-2,1.45,str(int(neutral_after))+'%',weight="bold")
+        ax[k%4,k//4].text((negative_after*2+neutral_after*2+positive_after)/2-2,1.45,str(int(positive_after))+'%',weight="bold")
 
+        # ax.legend(handles=[leg1, leg2, leg3], ncol=3)
 
-        ax.legend(handles=[leg1, leg2, leg3], ncol=3)
+        ax[k%4,k//4].set_ylim(0, 5)
+        ax[k%4,k//4].set_xlim(0,100)
+        k+=1
+        leg1 = mpatches.Patch(color='#6259D8', label='negative')
+        leg2 = mpatches.Patch(color='#E53F08', label='neutral')
+        leg3 = mpatches.Patch(color='#FDB200', label='positive')
 
-
-
-
-
-
-        ax.set_ylim(0, 5)
-        ax.set_xlim(0,100)
-        plt.show()
-        break
-
-    
-    #     overall_sentiment[airline]=[sentiment_negative_after+sentiment_negative_before,sentiment_neutral_after+sentiment_neutral_before,sentiment_positive_after+sentiment_positive_before]
-    #     if airline!='KLM':
-    #         tab[0]+=sentiment_negative_after+sentiment_negative_before
-    #         tab[1]+=sentiment_neutral_after+sentiment_neutral_before
-    #         tab[2]+=sentiment_positive_after+sentiment_positive_before
-    # #sentiment-1 -> 1
-    # improvement={}
-    # for airline in colls:
-    #     improvement[airline]=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':1})/getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':{"$exists":True}})
+        fig.legend(handles=[leg1,leg2,leg3],fontsize=13)
+    plt.show()
         
-    # x=improvement.keys()
-    # y=improvement.values()
-    # df=pd.DataFrame(y,x)
-    # df.columns=['percentage of improved tweets']
-    # airlines=['Etihad','Ryan','AirFr','KLM','AA','Luft','SinAir','BritAir','easyJet','Qantas','Virgin']
-    # df_sorted=df.sort_values('percentage of improved tweets')
-    # plt.figure(figsize=(10,7))
-    # plt.bar(list(df_sorted.index),height=list(df_sorted['percentage of improved tweets']),color=['blue','blue','blue','orange','blue','blue','blue','blue','blue','blue','blue'])
-    # plt.ylim(bottom=0.3)
-    # plt.xticks(ticks=np.arange(11),labels=airlines)
-    # plt.title('negative -> positive sentiment')
-    # plt.show()
-    # plt.savefig('improved')
 
-sentiment_plot()
