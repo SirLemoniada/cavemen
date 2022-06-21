@@ -21,7 +21,7 @@ load_data.bat
 Create `load_data.bat` file in `data` folder\
 Run from `/cavemen/data`
 ```sh
-sh ./load_data
+sh ./load_data.bat
 ```
 
 ## Steps for cleaning data, doing sentiment analysis, and grouping conversations  

@@ -1,5 +1,5 @@
-import index #import index.py file
-tweet = index.tweets #import tweets variable from index.py file and assign to tweet
+import index 
+tweet = index.tweets
 
 from index import AirFrance_conversations
 from index import KLM_conversations

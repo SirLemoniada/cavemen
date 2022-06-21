@@ -1,8 +1,6 @@
-from this import d
-from unittest import skip
-import index #import index.py file
+import index 
 import pymongo
-tweet = index.tweets #import tweets variable from index.py file and assign to tweet
+tweet = index.tweets
 
 KLM = index.KLM_conversations
 British_Airways = index.British_Airways_conversations

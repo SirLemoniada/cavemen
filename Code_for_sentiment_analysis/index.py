@@ -1,4 +1,3 @@
-
 import pymongo
 
 conn_str = 'mongodb://127.0.0.1:27017'
@@ -19,4 +18,3 @@ SingaporeAir_conversations = cavemen.SingaporeAir
 Qantas_conversations = cavemen.Qantas
 EtihadAirways_conversations = cavemen.EtihadAirways
 VirginAtlantic_conversations = cavemen.VirginAtlantic
-sentiment_analysis=cavemen.sentiment
