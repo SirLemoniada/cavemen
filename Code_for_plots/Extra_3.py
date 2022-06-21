@@ -1,7 +1,7 @@
 from logging.config import IDENTIFIER
-import index #import index.py file
+import index 
 import string
-tweet = index.tweets #import tweets variable from index.py file and assign to tweet
+tweet = index.tweets 
 
 from index import AirFrance_conversations
 from index import KLM_conversations
