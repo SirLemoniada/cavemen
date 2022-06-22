@@ -1,17 +1,16 @@
 from textblob import TextBlob
 import index
 import re
+import pymongo
+from index import tweets
 tweet = index.tweets
-sntm = index.sentiment_analysis
 
-# tweet.update_many({"sentiment" : {"$exists" : True}}, {"$unset" : {"sentiment" : ""}})
+tweets.create_index([('id',pymongo.ASCENDING)], name='sentiment_id')
 
 def clean_tweet(tweet):
     return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) | (\w +:\ / \ / \S +)", " ", tweet).split())
 
 def sentiment_analysis(text):
-
-
     if TextBlob(clean_tweet(text)).polarity > 0:
         return (1)
 
@@ -35,15 +34,8 @@ for tweet_object in found_tweets:
     print(a)
 
 for value in sentiment_dict:
+    
+    tweet.update_one({"id" : value}, {"$set" : {"sentiment" : sentiment_dict[value]}})
 
     b += 1
-
-    tweet.update_one({"id" : value}, {"$set" : {"sentiment" : sentiment_dict[value]}})
-    tweet_object = tweet.find_one({"id" : value})
-    sntm.insert_one(tweet_object)
-    tweet.delete_one({"id" : value})
-
     print(b)
-
-
-
