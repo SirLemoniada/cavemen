@@ -128,3 +128,63 @@ def sentiment_plot():
     plt.show()
         
 
+
+def sentiment_evolution_plot():
+    
+    fig,ax=plt.subplots(4,3,sharex=True,sharey=True)
+    i=0
+    fig.suptitle("Distribution of sentiment of customers' replies", fontsize=20, weight='bold')
+
+    for airline in colls:
+        d3_no_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':{"$exists":True}, "$expr": { "$in": [{ "$month": "$created_at" }, [5,6,7,8,9,10]]}})
+        negative_d3_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':-1,"$expr": { "$in": [{ "$month": "$created_at" }, [5,6,7,8,9,10]]}})
+        neutral_d3_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':0,"$expr": { "$in": [{ "$month": "$created_at" }, [5,6,7,8,9,10]]}})
+        positive_d3_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':1,"$expr": { "$in": [{ "$month": "$created_at" }, [5,6,7,8,9,10]]}})
+
+        d3_no_after=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':{"$exists":True}, "$expr": { "$in": [{ "$month": "$created_at" }, [11,12,1,2,3]]}})
+        negative_d3_after=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':-1,"$expr": { "$in": [{ "$month": "$created_at" }, [11,12,1,2,3]]}})
+        neutral_d3_after=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':0,"$expr": { "$in": [{ "$month": "$created_at" }, [11,12,1,2,3]]}})
+        positive_d3_after=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':1,"$expr": { "$in": [{ "$month": "$created_at" }, [11,12,1,2,3]]}})
+
+        negative_d3_before_perc=100*negative_d3_before/d3_no_before
+        neutral_d3_before_perc=100*neutral_d3_before/d3_no_before
+        positive_d3_before_perc=100*positive_d3_before/d3_no_before
+
+        negative_d3_after_perc=100*negative_d3_after/d3_no_after
+        neutral_d3_after_perc=100*neutral_d3_after/d3_no_after
+        positive_d3_after_perc=100*positive_d3_after/d3_no_after
+
+        ax[i%4,i//4].broken_barh([(0,negative_d3_before_perc),(negative_d3_before_perc,negative_d3_before_perc+neutral_d3_before_perc),(negative_d3_before_perc+neutral_d3_before_perc,negative_d3_before_perc+neutral_d3_before_perc+positive_d3_before_perc)],[3,1],facecolors=('#E53F08', '#FDB200','#6259D8'))
+        ax[i%4,i//4].broken_barh([(0,negative_d3_after_perc),(negative_d3_after_perc,negative_d3_after_perc+neutral_d3_after_perc),(negative_d3_after_perc+neutral_d3_after_perc,negative_d3_after_perc+neutral_d3_after_perc+positive_d3_after_perc)],[1,1],facecolors=('#E53F08', '#FDB200','#6259D8'))
+
+        ax[i%4,i//4].set_yticks([1.5,2.5,3.5])
+        ax[i%4,i//4].set_yticklabels(['May - Oct. 2019','change of neg. sent.','Nov. 2019 - Mar. 2020'],weight="bold")
+        ax[i%4,i//4].set_xticks([0, 25, 50, 75, 100])
+        ax[i%4,i//4].set_xticklabels(['0%','25%','50%','75%','100%'])
+
+        leg1 = mpatches.Patch(color='#E53F08', label='negative')
+        leg2 = mpatches.Patch(color='#FDB200', label='neutral')
+        leg3 = mpatches.Patch(color='#6259D8', label='positive')
+
+        ax[i%4,i//4].set_title(airline,weight="bold")
+
+        ax[i%4,i//4].text(negative_d3_before_perc/2-2,3.45,str(int(negative_d3_before_perc))+'%',weight="bold")
+        ax[i%4,i//4].text((2*negative_d3_before_perc+neutral_d3_before_perc)/2-2,3.45,str(int(neutral_d3_before_perc))+'%',weight="bold")
+        ax[i%4,i//4].text((negative_d3_before_perc*2+neutral_d3_before_perc*2+positive_d3_before_perc)/2-2,3.45,str(int(positive_d3_before_perc))+'%',weight="bold")
+
+        ax[i%4,i//4].text(negative_d3_after_perc/2-2,1.45,str(int(negative_d3_after_perc))+'%',weight="bold")
+        ax[i%4,i//4].text((2*negative_d3_after_perc+neutral_d3_after_perc)/2-2,1.45,str(int(neutral_d3_after_perc))+'%',weight="bold")
+        ax[i%4,i//4].text((negative_d3_after_perc*2+neutral_d3_after_perc*2+positive_d3_after_perc)/2-2,1.45,str(int(positive_d3_after_perc))+'%',weight="bold")
+        if(negative_d3_before_perc-negative_d3_after_perc>=0):
+            ax[i%4,i//4].annotate(arrowprops={'arrowstyle': '->', 'lw': 2,'color':'green'},xy=(10,2.5),text=str(-int(negative_d3_before_perc-negative_d3_after_perc))+'%',va='center',ha='center',xytext=(abs(negative_d3_before_perc-negative_d3_after_perc)+15,2.5))
+        else:
+            ax[i%4,i//4].annotate(arrowprops={'arrowstyle': '<-', 'lw': 2,'color':'red'},xy=(10,2.5),text='+'+str(-int(negative_d3_before_perc-negative_d3_after_perc))+'%',va='center',ha='center',xytext=(abs(negative_d3_before_perc-negative_d3_after_perc)+15,2.5))
+
+        ax[i%4,i//4].set_ylim(0, 5)
+        ax[i%4,i//4].set_xlim(0,100)
+        i+=1
+        # print(negative_d3_before,neutral_d3_before,positive_d3_before,d3_no_before)
+        # break
+    fig.legend(handles=[leg1,leg2,leg3],fontsize=13)
+    plt.show()
+sentiment_evolution_plot()
