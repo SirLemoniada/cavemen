@@ -1,5 +1,5 @@
-import index #import index.py file
-tweet = index.tweets #import tweets variable from index.py file and assign to tweet
+import index 
+tweet = index.tweets 
 import matplotlib.pyplot as plt
 from numpy import mean
 
