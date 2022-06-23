@@ -7,14 +7,14 @@ from index import tweets
 from index import KLM_conversations
 
 
-def dataframe_for_plot():
+def dataframe_for_plot(time:list):
     mentions_per_week = tweets.aggregate([
-        {"$match": {'is_a_reply':False, 'entities.user_mentions.id':56377143, 'sentiment':-1}},
+        {"$match": {'is_a_reply':False, 'entities.user_mentions.id':56377143, 'sentiment':-1, "$expr": { "$in": [{ "$month": "$created_at" }, time]}}},
     {"$group" : {"_id":{"year":{"$year":"$created_at"}, "week": {"$week":"$created_at"}}, "count": {"$sum":1}}},
     {"$sort":{"_id":1}}
     ])
     replies_per_week = KLM_conversations.aggregate([
-        {"$match": {'depth_1.sentiment':-1}},
+        {"$match": {'depth_1.sentiment':-1, "$expr": { "$in": [{ "$month": "$created_at" }, time]}}},
     {"$group" : {"_id":{"year":{"$year":"$created_at"}, "week": {"$week":"$created_at"}}, "count": {"$sum":1}}},
     {"$sort":{"_id":1}}
     ])
@@ -43,11 +43,10 @@ def plot_amount_reply(df):
     
     ax.set_ylim(0,1000)
     ax.legend(["Responded", "Directed to KLM"])
-    ax.set_xlabel("Week of the year")
+    ax.set_xlabel("Week of the year (year-week)")
     ax.set_ylabel("Amount of tweets")
     ax.set_title("Amount of tweets responded compared to amount of tweets directed to KLM with a negative sentiment")
     plt.xticks(rotation = 45)
     
-    return plt.show()
-
-plot_amount_reply(dataframe_for_plot())
+    plt.savefig("Plots_for_demo/Extra_1.png")
+    plt.close()
