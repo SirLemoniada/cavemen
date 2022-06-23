@@ -158,7 +158,7 @@ def sentiment_evolution_plot():
         ax[i%4,i//4].broken_barh([(0,negative_d3_after_perc),(negative_d3_after_perc,negative_d3_after_perc+neutral_d3_after_perc),(negative_d3_after_perc+neutral_d3_after_perc,negative_d3_after_perc+neutral_d3_after_perc+positive_d3_after_perc)],[1,1],facecolors=('#E53F08', '#FDB200','#6259D8'))
 
         ax[i%4,i//4].set_yticks([1.5,2.5,3.5])
-        ax[i%4,i//4].set_yticklabels(['May - Oct. 2019','change of neg. sent.','Nov. 2019 - Mar. 2020'],weight="bold")
+        ax[i%4,i//4].set_yticklabels(['Nov. 2019 - Mar. 2020','change of neg. sent.','May - Oct. 2019'],weight="bold")
         ax[i%4,i//4].set_xticks([0, 25, 50, 75, 100])
         ax[i%4,i//4].set_xticklabels(['0%','25%','50%','75%','100%'])
 
