@@ -1,5 +1,3 @@
-from logging.config import IDENTIFIER
-from msilib.schema import ServiceControl
 import matplotlib.pyplot as plt
 import numpy as np
 import string
@@ -16,8 +14,6 @@ from index import SingaporeAir_conversations
 from index import Qantas_conversations
 from index import EtihadAirways_conversations
 from index import VirginAtlantic_conversations
-
-time = [1,2,3,4,5,6,7,8,9,10,11,12]
 
 def occurance_of_words(time:list):
     dct = {}
