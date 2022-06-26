@@ -67,69 +67,7 @@ def reply_plot():
     print(percentage,others_percentage)
 
 
-
-
-def sentiment_plot():
-    conversations={}
-    k=0
-    fig,ax=plt.subplots(4,3,sharex=True,sharey=True)
-    fig.suptitle('Change in sentiment throughout the conversations', fontsize=20, weight='bold')
-    for airline in colls:
-        sentiment_negative_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':-1,'depth_3.sentiment':{"$exists":True}})
-        sentiment_negative_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':-1})
-        sentiment_neutral_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':0,'depth_3.sentiment':{"$exists":True}})
-        sentiment_neutral_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':0})
-        sentiment_positive_before=getattr(cavemen,airline).count_documents({'depth_1.sentiment':1,'depth_3.sentiment':{"$exists":True}})
-        sentiment_positive_after=getattr(cavemen,airline).count_documents({'depth_3.sentiment':1})
-        
-        conversations[airline]=getattr(cavemen,airline).count_documents({'depth_3.sentiment':{'$exists':True}})
-
-        negative_before=100*sentiment_negative_before/conversations[airline]
-        neutral_before=100*sentiment_neutral_before/conversations[airline]
-        positive_before=100*sentiment_positive_before/conversations[airline]
-
-        negative_after=100*sentiment_negative_after/conversations[airline]
-        neutral_after=100*sentiment_neutral_after/conversations[airline]
-        positive_after=100*sentiment_positive_after/conversations[airline]
-
-        ax[k%4,k//4].broken_barh([(0,negative_before),(negative_before,negative_before+neutral_before),(neutral_before+negative_before,negative_before+neutral_before+positive_before)],[3,1],facecolors=('#6259D8', '#E53F08', '#FDB200'))
-        ax[k%4,k//4].broken_barh([(0,negative_after),(negative_after,negative_after+neutral_after),(neutral_after+negative_after,negative_after+neutral_after+positive_after)],[1,1],facecolors=('#6259D8', '#E53F08', '#FDB200'))
-
-        ax[k%4,k//4].set_yticks([1.5,3.5])
-        ax[k%4,k//4].set_xticks([0, 25, 50, 75, 100])
-        ax[k%4,k//4].set_xticklabels(['0%','25%','50%','75%','100%'])
-        ax[k%4,k//4].set_yticklabels(['after','before'],weight="bold")
-        ax[k%4,k//4].set_axisbelow(True)
-        leg1 = mpatches.Patch(color='#6259D8', label='negative')
-        leg2 = mpatches.Patch(color='#E53F08', label='neutral')
-        leg3 = mpatches.Patch(color='#FDB200', label='positive')
-        ax[k%4,k//4].set_title(airline,weight="bold")
-        #before
-        ax[k%4,k//4].text(negative_before/2-2,3.45,str(int(negative_before))+'%',weight="bold")
-        ax[k%4,k//4].text((2*negative_before+neutral_before)/2-2,3.45,str(int(neutral_before))+'%',weight="bold")
-        ax[k%4,k//4].text((negative_before*2+neutral_before*2+positive_before)/2-2,3.45,str(int(positive_before))+'%',weight="bold")
-
-        ax[k%4,k//4].annotate(arrowprops={'arrowstyle': '<-', 'lw': 2,'color':'green'},xy=(0,2.5),text=str(int(negative_before-negative_after))+'%',va='center',ha='center',xytext=(negative_before-negative_after+5,2.5))
-        #after
-        ax[k%4,k//4].text(negative_after/2-2,1.45,str(int(negative_after))+'%',weight="bold")
-        ax[k%4,k//4].text((2*negative_after+neutral_after)/2-2,1.45,str(int(neutral_after))+'%',weight="bold")
-        ax[k%4,k//4].text((negative_after*2+neutral_after*2+positive_after)/2-2,1.45,str(int(positive_after))+'%',weight="bold")
-
-        # ax.legend(handles=[leg1, leg2, leg3], ncol=3)
-
-        ax[k%4,k//4].set_ylim(0, 5)
-        ax[k%4,k//4].set_xlim(0,100)
-        k+=1
-        leg1 = mpatches.Patch(color='#6259D8', label='negative')
-        leg2 = mpatches.Patch(color='#E53F08', label='neutral')
-        leg3 = mpatches.Patch(color='#FDB200', label='positive')
-
-        fig.legend(handles=[leg1,leg2,leg3],fontsize=13)
-    plt.show()
-        
-
-
-def sentiment_evolution_plot():
+def sentiment_evolution_plot(above_months:list,below_months:list):
     
     above_months = [5,6,7,8,9,10]
     below_months = [11,12,1,2,3]
@@ -187,5 +125,5 @@ def sentiment_evolution_plot():
         ax[i%4,i//4].set_xlim(0,100)
         i+=1
     fig.legend(handles=[leg1,leg2,leg3],fontsize=13)
-    plt.show()
-sentiment_evolution_plot()
+    plt.savefig("Plots_for_demo/Extra_1.png")
+    plt.close()
