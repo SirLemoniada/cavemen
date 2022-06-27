@@ -125,5 +125,5 @@ def sentiment_evolution_plot(above_months:list,below_months:list):
         ax[i%4,i//4].set_xlim(0,100)
         i+=1
     fig.legend(handles=[leg1,leg2,leg3],fontsize=13)
-    plt.savefig("Plots_for_demo/Extra_1.png")
+    plt.savefig("Plots_for_demo/Sentiment_change.png")
     plt.close()
