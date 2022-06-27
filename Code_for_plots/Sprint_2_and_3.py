@@ -784,3 +784,11 @@ def Mean_sentiment_per_airline():
     plt.xticks(size=12, rotation = 15)
     plt.xlabel("Airlines", size=15, weight='bold')
     plt.show()
+
+# reply_time_in_hours()
+# Relation_between_sentiment_and_reply_time()
+# How_many_conversations_per_airline()
+# sentiment_analysis_for_each_airline()
+# reply_plot()
+# sentiment_plot()
+# Mean_sentiment_per_airline()

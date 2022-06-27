@@ -3,7 +3,9 @@
 
 1. Install `MongoDB Compass` - https://www.mongodb.com/try/download/compass.
 2. Install `MongoDB Extension` on Visual Studio Code.
-3. Connect to MongoDB via VSCode extension using this code - `mongodb://localhost:27017`
+3. Install `MongoDB Community server` - https://www.mongodb.com/try/download/community
+4. Install `MongoDB Tools` - https://www.mongodb.com/try/download/database-tools
+5. Connect to MongoDB via VSCode extension using this code - `mongodb://localhost:27017`
 
 ## Installing all packages (via Terminal)
 
@@ -49,7 +51,7 @@ sh ./load_data.bat
 
 ## Plots Sprint 1
 
-1. Go to `Code_for_plots` folder and run `Sprint_1.py`
+1. Go to `Code_for_plots` folder and uncomment functions that you want to run `Sprint_1.py`
 
 ## Sentiment Analysis
 
@@ -65,9 +67,9 @@ sh ./load_data.bat
 
 ## Plots Sprint 2 and 3
 
-1. Go to `Code_for_plots` folder and run `Sprint_2_and_3.py`
+1. Go to `Code_for_plots` folder and ucomment the function you want to run `Sprint_2_and_3.py`
 
-## Plots Sprint 4
+## Running Demo 
 
 1. Create `Plots_for_demo` folder and create `Extra_1.png`, `Extra_2.png` , `Extra_3.png`, and `Sentiment_change.png` files
 2. Run `Running_demo.py`
