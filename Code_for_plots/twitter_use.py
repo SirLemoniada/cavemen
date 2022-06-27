@@ -69,8 +69,6 @@ def reply_plot():
 
 def sentiment_evolution_plot(above_months:list,below_months:list):
     
-    above_months = [5,6,7,8,9,10]
-    below_months = [11,12,1,2,3]
     fig,ax=plt.subplots(4,3,sharex=True,sharey=True)
     i=0
     fig.suptitle("Compare negative sentiment improvement between first and last six months", fontsize=16, weight='bold')
