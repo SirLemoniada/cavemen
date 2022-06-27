@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import string
+
 
 from index import tweets
 from index import AirFrance_conversations
