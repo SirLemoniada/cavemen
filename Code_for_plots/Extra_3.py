@@ -78,15 +78,16 @@ def sentiment_change_per_topic(topic_occurance_dct):
 
     v = np.array(v)
 
-    plt.bar(range(len(c)), v[:,1]/v[:,0]*100)
-    plt.bar(range(len(c)), v[:,2]/v[:,0]*100, bottom=v[:,1]/v[:,0]*100)
-    plt.xticks(range(len(c)), c)
+    plt.bar(range(len(c)), v[:,1]/v[:,0]*100, color = '#6259D8')
+    #plt.bar(range(len(c)), v[:,2]/v[:,0]*100, bottom=v[:,1]/v[:,0]*100)
+    plt.xticks(range(len(c)), c, size = 15)
 
-    plt.title("Improvement of sentiment for frequently adressed topics")
-    plt.xlabel("Topic")
-    plt.ylabel("Percentage of succes (in %)")
-    plt.legend(["negative to positive", "negative to neutral"])
+    plt.title("Improvement of sentiment for frequently adressed topics", size = 15, weight = 'bold')
+    plt.xlabel("Topic", size = 15, weight = 'bold')
+    plt.ylabel("Percentage of succes (in %)", size = 15, weight = 'bold')
+    plt.legend(["negative to positive", "negative to neutral"], prop={'size': 15})
     plt.ylim(0,100)
-    
+    plt.yticks(size = 15)
+
     plt.savefig("Plots_for_demo/Extra_3.png")
     plt.close()
