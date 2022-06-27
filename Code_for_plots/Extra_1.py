@@ -38,15 +38,16 @@ def dataframe_for_plot(time:list):
 
 
 def plot_amount_reply(df):
-    ax = df[['week_yr','count']].plot.bar(x = 'week_yr', y = 'count')
-    df['count2'].plot(ax=ax, c='r')
+    ax = df[['week_yr','count']].plot.bar(x = 'week_yr', y = 'count', color = '#6259D8')
+    df['count2'].plot(ax=ax, color = '#E53F08')
     
     ax.set_ylim(0,1000)
-    ax.legend(["Responded", "Directed to KLM"])
-    ax.set_xlabel("Week of the year (year-week)")
-    ax.set_ylabel("Amount of tweets")
-    ax.set_title("Amount of tweets responded compared to amount of tweets directed to KLM with a negative sentiment")
-    plt.xticks(rotation = 45)
+    ax.legend(["Responded", "Directed to KLM"], prop={'size': 15})
+    ax.set_xlabel("Week of the year (year-week)", size = 15, weight = 'bold')
+    ax.set_ylabel("Amount of tweets", size = 15, weight = 'bold')
+    ax.set_title("Amount of tweets with a negative sentiment directed to KLM, compared to responded", size = 18, weight = 'bold')
+    plt.xticks(rotation = 90, size = 17)
+    plt.yticks(size = 17)
     
     plt.savefig("Plots_for_demo/Extra_1.png")
     plt.close()
