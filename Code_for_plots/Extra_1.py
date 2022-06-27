@@ -45,7 +45,7 @@ def plot_amount_reply(df):
     ax.legend(["Responded", "Directed to KLM"], prop={'size': 15})
     ax.set_xlabel("Week of the year (year-week)", size = 15, weight = 'bold')
     ax.set_ylabel("Amount of tweets", size = 15, weight = 'bold')
-    ax.set_title("Amount of tweets with a negative sentiment directed to KLM, compared to reponded", size = 18, weight = 'bold')
+    ax.set_title("Amount of tweets with a negative sentiment directed to KLM, compared to responded", size = 18, weight = 'bold')
     plt.xticks(rotation = 90, size = 17)
     plt.yticks(size = 17)
     
