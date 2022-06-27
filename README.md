@@ -69,4 +69,5 @@ sh ./load_data.bat
 
 ## Plots Sprint 4
 
-1. Go to `Code_for_plots` folder and run `Sprint_4.py`
+1. Create `Plots_for_demo` folder and create `Extra_1.png`, `Extra_2.png` , `Extra_3.png`, and `Sentiment_change.png` files
+2. Run `Running_demo.py`
