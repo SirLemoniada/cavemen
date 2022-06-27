@@ -90,8 +90,7 @@ def sentiment_change_per_topic(topic_occurance_dct):
     plt.ylim(0,45)
 
     for plot in ax.containers:
-        print(plot)
         ax.bar_label(plot, size=15)
-
+    
     plt.savefig("Plots_for_demo/Extra_3.png")
     plt.close()
