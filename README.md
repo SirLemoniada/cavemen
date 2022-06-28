@@ -6,6 +6,7 @@
 3. Install `MongoDB Community server` - https://www.mongodb.com/try/download/community
 4. Install `MongoDB Tools` - https://www.mongodb.com/try/download/database-tools
 5. Connect to MongoDB via VSCode extension using this code - `mongodb://localhost:27017`
+6. Make the `DB Tools` available in your PATH - https://www.mongodb.com/docs/database-tools/installation/installation-windows/
 
 ## Installing all packages (via Terminal)
 
