@@ -9,7 +9,7 @@ print('Extra_2 done')
 Sprint_4.Extra_3_sentiment_change_per_topic(Sprint_4.Extra_3_occurance_of_topics(months))
 print('Extra_3 done')
 
-above_months = [8]
-below_months = [9]
+above_months = [6]
+below_months = [7]
 Sprint_4.sentiment_evolution_plot(above_months,below_months)
 print('Sentiment_change done')
