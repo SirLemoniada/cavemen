@@ -105,3 +105,8 @@ def Tweets_sent_by_each_airline_per_day_in_June():
     plt.xlabel("Day")
     plt.ylabel("Number of tweets")
     plt.show()
+
+# Number_of_tweets_per_language()
+# Number_of_tweets_sent_by_each_airline()
+# Number_of_followers_for_each_airline()
+# Tweets_sent_by_each_airline_per_day_in_June()
